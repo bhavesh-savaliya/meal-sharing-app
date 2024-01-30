@@ -1,6 +1,6 @@
 # Tiffin Service App
 
-Tiffin Service App delivers freshly prepared delicious meals and easy-to-cook recipes directly to consumers doorstep. App links local home chefs to it's target consumers. The app promotes community by empowering home cooks and ensured quality in check. App offers to subscribe to various meals, tailor it to their liking, manage meal calendar, and explore recipes with ease. 
+Tiffin Service App delivers freshly prepared delicious meals and easy-to-cook recipes directly to consumers doorstep. The Tiffin Service App links directly to its target consumers. The app promotes community by empowering home cooks and ensured quality in check. App offers to subscribe to various meals, tailor it to their liking, manage meal calendar, and explore recipes with ease. 
 
 ### Group 6
 
