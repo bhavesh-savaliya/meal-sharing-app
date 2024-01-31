@@ -1,6 +1,6 @@
-# Tiffin Service App
+# Meal Sharing App
 
-Tiffin Service App delivers freshly prepared delicious meals and easy-to-cook recipes directly to consumers doorstep. The Tiffin Service App links directly to its target consumers. The app promotes community by empowering home cooks and ensured quality in check. App offers to subscribe to various meals, tailor it to their liking, manage meal calendar, and explore recipes with ease. 
+Explore an endless buffet of anonymously shared meals, connect with fellow foodies, and savor the flavors of community. Here users can bookmark their favourites, or create and share their special culinary creation with the community.
 
 ### Group 6
 
@@ -9,10 +9,12 @@ Tiffin Service App delivers freshly prepared delicious meals and easy-to-cook re
 
 ### Features
 
-- A Consumer can search for meals and recipes and Filter the results by Location, Type of Cuisine(e.g. Veg, Vegan, etc.), Price.
-- A Consumer can subscribe to their preferred meals
-- Subscribed meals can be customized by item count, order quantity, delivery time and location
-- It allows user to easily manage a calender of daily/weekly meals for breakfast/lunch/dinner
-- Like, save and share recipes
-- App preferences: List/Tile/Details View, Dark/Light Mode
-- Notifications: Promotional offers, newly added meals
+- Displays a curated feed of meals shared by community anonymously.
+- Users can search for meals by dish title, ingredients, cuisine, etc.
+- Users can apply filters on search results based on various criteria like meal type (e.g. breakfast, lunch, dinner), ingredients (e.g. Lemon, Green Chilli, etc.), dietary tags, etc.
+- Users can create their own meals by filling out title, description, tags, optional photos, etc.
+- Users can share their created meals with the community. Shared meals appear on the home page for others to see.
+- Users can bookmark meals they like for later reference. Bookmarked meals will be visible to a separate screen.
+- Users can change the language of the app
+- Theme settings allow users to switch between Light and Dark mode
+- Users can toggle between different view modes like List, Tile, or Details
