@@ -1,4 +1,4 @@
-package com.capstone.tiffinserviceapp
+package com.capstone.group6
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

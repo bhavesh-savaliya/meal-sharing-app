@@ -1,4 +1,4 @@
-package com.capstone.tiffinserviceapp
+package com.capstone.group6
 
 import org.junit.Test
 

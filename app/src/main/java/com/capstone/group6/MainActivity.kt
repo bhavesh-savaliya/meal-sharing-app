@@ -1,4 +1,4 @@
-package com.capstone.tiffinserviceapp
+package com.capstone.group6
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

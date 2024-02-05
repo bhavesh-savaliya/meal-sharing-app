@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.capstone.tiffinserviceapp"
+        applicationId "com.capstone.group6"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -29,6 +29,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures{
+        viewBinding true
     }
 }
 
