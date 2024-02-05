@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.capstone.tiffinserviceapp'
+    namespace 'com.capstone.group6'
     compileSdk 33
 
     defaultConfig {
