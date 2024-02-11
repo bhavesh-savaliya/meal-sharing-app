@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "tiffin-service-app"
+rootProject.name = "meal-sharing-app"
 include ':app'
