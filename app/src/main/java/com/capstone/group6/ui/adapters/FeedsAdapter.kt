@@ -6,7 +6,9 @@
  */
 package com.capstone.group6.ui.adapters
 
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -26,6 +28,7 @@ import com.bumptech.glide.Glide
 import com.capstone.group6.R
 import com.capstone.group6.databinding.ItemFeedBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
+import com.capstone.group6.ui.FeedDetailsActivity
 import java.util.Random
 
 
@@ -101,7 +104,18 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Co
 
             setOnClickListener {
                 Log.d(TAG, "onBindViewHolder: $it")
-                onItemClickListner?.let { it(feed) }
+                val intent = Intent(context, FeedDetailsActivity::class.java).apply {
+                    putExtra("position", position)
+                }
+                val options = ActivityOptions.makeCustomAnimation(
+                    context,
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left
+                )
+
+                context.startActivity(intent, options.toBundle())
+
+
             }
         }
     }
