@@ -1,9 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Tiffinserviceapp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">?attr/isLightTheme</item>
+        <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
     </style>
 
     <style name="Theme.Tiffinserviceapp" parent="Base.Theme.Tiffinserviceapp" />
+
+
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light">
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
 </resources>

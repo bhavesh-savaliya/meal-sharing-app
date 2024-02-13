@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">meal-sharing-app</string>
+    <string name="app_name">MealShare</string>
+    <string name="search_menu">Feeds</string>
+    <string name="search_here">Search Here...</string>
+    <string name="search_feeds_here">Search Feeds Here...</string>
 </resources>

@@ -15,7 +15,7 @@ interface MealDao {
     @Query("SELECT * FROM Meal")
     fun getMeals(): Flow<List<Meal>>
 
-    @Query("SELECT * FROM Meal WHERE userId = :id")
+    @Query("SELECT * FROM Meal WHERE title = :id")
     suspend fun getMealById(id: String): Meal?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -24,7 +24,7 @@ interface MealDao {
     @Delete
     suspend fun delete(meal: Meal)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(user: User)
 
     @Query("SELECT * FROM meal WHERE title LIKE :searchQuery OR description LIKE :searchQuery OR dietarytags LIKE :searchQuery OR ingredients LIKE :searchQuery")

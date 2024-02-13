@@ -7,11 +7,12 @@ import java.lang.Exception
 
 @Entity
 data class Meal(
-    @PrimaryKey val id: Int? = null,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val access: Boolean,
     var userId: String? = null,
     var user: User?=null,
     val title: String? = null,
+    var image:String?=null,
     val description: String,
     val cuisineType: CuisineType = CuisineType.GUJARATI,
     val ingredients: String? = null,
@@ -25,6 +26,7 @@ data class Meal(
     constructor() : this(
         null,
         false,
+        null,
         null,
         null,
         null,

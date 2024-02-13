@@ -9,8 +9,8 @@ data class User(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int? = null,
-
     val name: String? = null,
     val userId: String? = null
+
 
 )
