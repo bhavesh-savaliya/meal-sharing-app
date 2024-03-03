@@ -12,10 +12,10 @@ import com.capstone.group6.feature_meal.domain.model.User
 import com.capstone.group6.feature_meal.domain.repository.MealRepository
 import kotlinx.coroutines.flow.Flow
 
-class MealRepositoryImpl(val mealDao: MealDao) : MealRepository {
+class MealRepositoryImpl(private val mealDao: MealDao) : MealRepository {
 
-    override fun getMeals(): Flow<List<Meal>> {
-        return mealDao.getMeals()
+    override fun getMeals(isLocal:Boolean): Flow<List<Meal>> {
+        return mealDao.getMeals(isLocal)
     }
 
     override suspend fun getMealById(id: String): Meal? {

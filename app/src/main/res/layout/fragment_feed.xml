@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.FeedFragment">
     <SearchView
+        android:visibility="gone"
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +15,14 @@
         android:iconifiedByDefault="false"
         android:padding="4dp"
         android:queryHint="@string/search_feeds_here" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:theme="@style/Theme.Tiffinserviceapp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/colorAccent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFeeds"

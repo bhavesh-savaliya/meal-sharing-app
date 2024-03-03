@@ -6,17 +6,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_auto_awesome_mosaic_24"
-        android:title="Feed" />
+        android:title="@string/feed" />
     <item
         android:id="@+id/favFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_favorite_24"
-        android:title="Favourites" />
+        android:title="@string/favourites" />
     <item
         android:id="@+id/userFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_sentiment_satisfied_alt_24"
-        android:title="User" />
+        android:icon="@drawable/baseline_note_add_24"
+        android:title="@string/meal_plan" />
 </menu>

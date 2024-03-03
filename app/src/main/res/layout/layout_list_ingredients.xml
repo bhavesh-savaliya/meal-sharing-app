@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/_10sdp"
+    >
+    <TextView
+        android:layout_toStartOf="@+id/close"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/textLength"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/bold"
+        android:textColor="@color/black"
+        android:paddingStart="@dimen/_5sdp"
+        android:text="@string/select_ingredients"
+        android:textSize="@dimen/_18sdp" />
+    <ImageView
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/close"
+        android:layout_alignParentEnd="true"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:src="@drawable/ic_close"
+        android:padding="@dimen/_5sdp"/>
+
+    <TextView
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/medium"
+        android:textColor="@color/black"
+        android:paddingStart="@dimen/_5sdp"
+        android:visibility="gone"
+        android:textSize="@dimen/_14sdp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/textLength"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/ingredientsRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

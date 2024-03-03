@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MealDao {
 
-    @Query("SELECT * FROM Meal")
-    fun getMeals(): Flow<List<Meal>>
+    @Query("SELECT * FROM Meal WHERE isLocal =:isLocal")
+    fun getMeals(isLocal: Boolean): Flow<List<Meal>>
 
     @Query("SELECT * FROM Meal WHERE title = :id")
     suspend fun getMealById(id: String): Meal?

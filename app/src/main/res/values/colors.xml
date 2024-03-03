@@ -6,9 +6,10 @@
     <color name="colorAccent">#494E97</color>
     <color name="grey">#656464</color>
     <color name="bottom_nav_background">#494E97</color>
-    <color name="bottom_nav_item">#7F81AC</color>
-    <color name="bottom_nav_selected_item">#030430</color>
+    <color name="bottom_nav_item">#8F8F8F</color>
+    <color name="bottom_nav_selected_item">#7E83F3</color>
     <color name="fragment_bg_color">#F4F4FD</color>
+    <color name="lightgrey">#8F8F8F</color>
 
     <array name="androidcolors">
         <item>#9E68D1F8</item>

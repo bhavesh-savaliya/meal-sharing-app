@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MealRepository {
 
-    fun getMeals(): Flow<List<Meal>>
+    fun getMeals(isLocal:Boolean): Flow<List<Meal>>
 
     suspend fun getMealById(id: String): Meal?
 

@@ -64,7 +64,7 @@ class MealsViewModel @Inject constructor(
                 ) {
                     return
                 }
-                getMeals(event.mealOrder)
+                getMeals(event.mealOrder,false)
             }
 
             is MealEvents.DeleteMeal -> {
@@ -74,14 +74,6 @@ class MealsViewModel @Inject constructor(
                 }
             }
 
-//            is MealEvents.RestoteMeal -> {
-//                val mealToAdd = event.meal
-//                viewModelScope.launch {
-//
-//                    mealRepository.insertMeal(recentlyDeleted ?: return@launch)
-//                    recentlyDeleted = null
-//                }
-//            }
 
             is MealEvents.ToggleOrderSelection -> {
                 val currentState = state.value
@@ -95,9 +87,9 @@ class MealsViewModel @Inject constructor(
         }
     }
 
-    private fun getMeals(mealOrder: MealOrder) {
+    private fun getMeals(mealOrder: MealOrder,isLocal:Boolean) {
         getNoteJob?.cancel()
-        mealRepository.getMeals().onEach { meal ->
+        mealRepository.getMeals(isLocal).onEach { meal ->
             val updatedValue = MealState(
                 meals = meal,
                 mealOrder = mealOrder
@@ -114,8 +106,8 @@ class MealsViewModel @Inject constructor(
         }
     }
 
-    fun fetchMeals(): Flow<List<Meal>> {
-        return mealRepository.getMeals()
+    fun fetchMeals(isLocal:Boolean): Flow<List<Meal>> {
+        return mealRepository.getMeals(isLocal)
 
     }
 
@@ -145,7 +137,7 @@ class MealsViewModel @Inject constructor(
                         var meal = document.toObject(Meal::class.java)
                         meal?.let {
                             // Add userId manually
-                            it.userId = id
+//                            it.userId = id
                             it.user = user
 
 
@@ -173,10 +165,10 @@ class MealsViewModel @Inject constructor(
     private suspend fun getImages(title: String): String? {
         return withContext(Dispatchers.IO) {
             val storageReference = FirebaseStorage.getInstance().reference
-            val imageReference = storageReference.child("${removeCharactersAfterSpace(title)}.jpeg")
+            val imageReference = storageReference.child("${removeCharactersAfterSpace(title.lowercase())}.jpeg")
 
             try {
-                Log.d("TAG", "getImages: ${title}")
+                Log.d("TAG", "getImages: ${imageReference}")
                 // Fetch the download URL of the image
                 val imageUrl = imageReference.downloadUrl.await().toString()
                 Log.d("TAG", "getImages: $imageUrl")

@@ -6,7 +6,10 @@
  */
 package com.capstone.group6.ui.adapters
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -19,17 +22,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.capstone.group6.Constant.Companion.startActivity
 import com.capstone.group6.R
 import com.capstone.group6.databinding.ItemFeedBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
+import com.capstone.group6.ui.FeedDetailsActivity
 import java.util.Random
 
 
-class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Context) :
+
+class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: Activity) :
     RecyclerView.Adapter<FeedsAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(binding: ItemFeedBinding) :
@@ -40,9 +47,9 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Co
         val totalLikes = binding.totalLikes
         val cuisineType = binding.tvCuisineType
         val dietaryTag = binding.tvDietaryType
-        val userName =binding.tvUserName
-        val userImage =binding.ivUserImage
-        val prefix= binding.tvPrefix
+        val userName = binding.tvUserName
+        val userImage = binding.ivUserImage
+        val prefix = binding.tvPrefix
     }
 
     val TAG = "FeedsAdapter"
@@ -77,11 +84,12 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Co
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val feed = feedList[position]
         holder.itemView.apply {
-            Log.d(TAG, "onBindViewHolder: ${feed.title}")
-            Glide.with(this).load(feed.image).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).into(holder.ivImage)
+
+            Glide.with(this).load(feed.image).placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder).into(holder.ivImage)
             holder.tvTitle.text = feed.title
             holder.tvDescription.text = feed.description
-            holder.cuisineType.text = feed.cuisineType.name
+            holder.cuisineType.text = "Cuisine Type: ${feed.cuisineType.name}"
             val fullText = "Dietary Tag: ${feed.dietarytags.name}"
             val spannable = SpannableString(fullText)
             val startIndex = fullText.indexOf(feed.dietarytags.name)
@@ -95,13 +103,12 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Co
             holder.dietaryTag.text = spannable
 
             holder.totalLikes.text = "" + feed.likes
-            holder.userName.text= feed.user?.name ?: ""
+            holder.userName.text = feed.user?.name ?: ""
 
             feed.user?.name?.let { setUserDetails(holder.userImage, holder.prefix, it) }
 
             setOnClickListener {
-                Log.d(TAG, "onBindViewHolder: $it")
-                onItemClickListner?.let { it(feed) }
+                activity.startActivity(FeedDetailsActivity::class.java,position)
             }
         }
     }
@@ -113,9 +120,8 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Co
     }
 
 
-
     fun setUserDetails(ivUserImage: ImageView, textView: TextView, userName: String) {
-        val androidColors: IntArray = context.resources.getIntArray(R.array.androidcolors)
+        val androidColors: IntArray = activity.resources.getIntArray(R.array.androidcolors)
         val randomColor = androidColors[Random().nextInt(androidColors.size)]
 
         ivUserImage.setBackgroundResource(R.drawable.circle)
@@ -129,9 +135,4 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>,private var context: Co
     }
 
 
-    private var onItemClickListner: ((Meal) -> Unit)? = null
-
-    fun setOnItemClickListner(listner: (Meal) -> Unit) {
-        onItemClickListner = listner
-    }
 }

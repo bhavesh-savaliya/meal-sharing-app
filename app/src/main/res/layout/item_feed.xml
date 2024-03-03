@@ -50,7 +50,7 @@
         <ImageView
             android:id="@+id/ivFeedImage"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_150sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"

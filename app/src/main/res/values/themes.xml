@@ -1,17 +1,35 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Tiffinserviceapp" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">?attr/isLightTheme</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="Theme.Tiffinserviceapp" parent="Base.Theme.Tiffinserviceapp" />
 
 
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light">
         <item name="android:colorBackground">@color/white</item>
     </style>
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ToolbarTheme" parent="Widget.Material3.Toolbar">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="spinnerTheme">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
+    <style name="Style.App.circleImageView" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.App.circleImageView</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.circleImageView" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

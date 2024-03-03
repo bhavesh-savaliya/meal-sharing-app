@@ -1,6 +1,5 @@
 package com.capstone.group6.feature_meal.domain.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.lang.Exception
@@ -9,54 +8,59 @@ import java.lang.Exception
 data class Meal(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val access: Boolean,
-    var userId: String? = null,
+//    var userId: String? = null,
     var user: User?=null,
-    val title: String? = null,
+    var title: String? = null,
     var image:String?=null,
-    val description: String,
-    val cuisineType: CuisineType = CuisineType.GUJARATI,
-    val ingredients: String? = null,
-    val dietarytags: DietaryTag = DietaryTag.VEGETARIAN,
-    val likes: Long? = null,
-    val count: Int? = 0,
-    val quantity: Int? = 0,
-    val timestamp: Long
+    var description: String,
+    var cuisineType: CuisineType =CuisineType.Gujarati,
+    var ingredients: String? = null,
+    var dietarytags: DietaryTag = DietaryTag.Vegetarian,
+    var likes: Long? = null,
+    var count: String = "",
+    var quantity: Int? = 0,
+    var timestamp: Long,
+    var mealType:String,
+    var isPrivate:Boolean=false,
+    var isLocal :Boolean
 
 ) {
     constructor() : this(
         null,
         false,
-        null,
+
         null,
         null,
         null,
         "",
-        CuisineType.GUJARATI,
+        CuisineType.Gujarati,
         null,
-        DietaryTag.VEGETARIAN,
+        DietaryTag.Vegetarian,
         null,
+        "0",
         0,
         0,
-        0
+        "",
+        false,true
     )
 }
 
 
 
-enum class CuisineType {
-    ITALIAN,
-    MEXICAN,
-    CHINESE,
-    GUJARATI,
-    PUNJABI,
-    SOUTHINDIAN,
-}
+    enum class CuisineType {
+        Italian,
+        Mexican,
+        Chinese,
+        Gujarati,
+        Punjabi,
+        SouthIndian,
+    }
 
 enum class DietaryTag {
-    VEGETARIAN,
-    VEGAN,
-    GLUTEN_FREE,
-    DAIRY_FREE,
+    Vegetarian,
+    Vegan,
+    Glutenfree,
+    Dairyfree,
 
 }
 
