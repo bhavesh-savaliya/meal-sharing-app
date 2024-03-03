@@ -1,5 +1,6 @@
 package com.capstone.group6.ui
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,12 +34,14 @@ class FeedDetailsActivity : AppCompatActivity() {
         }
 
         val position = intent.getIntExtra("position", -1)
-        setUData(position,true)
+        setUpData(position)
     }
 
-    private fun setUData(position: Int,isLocal:Boolean) {
+
+    private fun setUpData(position: Int) {
         lifecycleScope.launch {
-            mealsViewModel.mealRepository.getMeals(isLocal).collect { meals ->
+            mealsViewModel.mealRepository.getMeals(true).collect { meals ->
+
                 feed = meals[position]
                 setUiData()
 
@@ -51,9 +55,9 @@ class FeedDetailsActivity : AppCompatActivity() {
 
         binding.tvTitle.text = feed.title
         binding.tvDescription.text = feed.description
-        binding.tvCuisineType.text = "Cuisine Type : " +feed.cuisineType.name.lowercase()
-        binding.tvDietaryType.text = "Dietary Tags : " +feed.dietarytags.name.lowercase()
-        binding. totalLikes.text = feed.likes.toString()
+        binding.tvCuisineType.text = "Cuisine Type : " + feed.cuisineType.name.lowercase()
+        binding.tvDietaryType.text = "Dietary Tags : " + feed.dietarytags.name.lowercase()
+        binding.totalLikes.text = feed.likes.toString()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MealApp"
@@ -18,21 +18,29 @@
         android:theme="@style/Theme.Tiffinserviceapp"
         tools:targetApi="31">
         <activity
+
             android:name=".ui.MealPlannerActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.Tiffinserviceapp">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
+
         <activity
             android:name=".ui.FeedDetailsActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"></activity>
