@@ -82,7 +82,18 @@
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
+        <TextView
+            android:id="@+id/tvMealType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="Meal Type"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
+            app:layout_constraintStart_toStartOf="@id/ivFeedImage"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
         <TextView
             android:id="@+id/tvCuisineType"
             android:layout_width="0dp"
@@ -94,7 +105,7 @@
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            app:layout_constraintTop_toBottomOf="@id/tvMealType" />
 
         <TextView
             android:id="@+id/tvDietaryType"

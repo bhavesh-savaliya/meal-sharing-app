@@ -2,6 +2,8 @@ package com.capstone.group6.feature_meal.domain.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Prefs (context: Context)
 {
@@ -9,7 +11,7 @@ class Prefs (context: Context)
     private var IsLanguageShown= "IsLanguageShown";
     private var isName="userName"
     private var IntroScreen= "IntroScreen";
-
+    private val gson = Gson()
     private val preferences: SharedPreferences = context.getSharedPreferences(APP_PREF_INT_EXAMPLE,Context.MODE_PRIVATE)
 
     var isIntroShown: Boolean
@@ -55,5 +57,25 @@ class Prefs (context: Context)
     var ingredient: String?
         get() = preferences.getString("ingredient", "Lemon")
         set(value) = preferences.edit().putString("ingredient", value!!).apply()
+    fun saveStringArray(key: String, list: List<String>) {
+        val json = gson.toJson(list)
+        saveString(key, json)
+    }
 
+    fun getStringArray(key: String, defaultValue: List<String>): List<String> {
+        val json = getString(key, "")
+        return if (json.isEmpty()) {
+            defaultValue
+        } else {
+            val listType = object : TypeToken<List<String>>() {}.type
+            gson.fromJson(json, listType)
+        }
+    }
+    fun saveString(key: String, value: String) {
+        preferences.edit().putString(key, value).apply()
+    }
+
+    fun getString(key: String, defaultValue: String): String {
+        return preferences.getString(key, defaultValue) ?: defaultValue
+    }
 }

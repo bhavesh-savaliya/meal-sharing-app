@@ -2,6 +2,8 @@ package com.capstone.group6.feature_meal.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.capstone.group6.feature_meal.data.data_source_meal.ArrayListConverter
 import java.lang.Exception
 
 @Entity
@@ -14,15 +16,16 @@ data class Meal(
     var image:String?=null,
     var description: String,
     var cuisineType: CuisineType =CuisineType.Gujarati,
-    var ingredients: String? = null,
+    @TypeConverters(ArrayListConverter::class)
+    var ingredients: List<String>? = null,
     var dietarytags: DietaryTag = DietaryTag.Vegetarian,
-    var likes: Long? = null,
+    var likes: Int? = 25,
     var count: String = "",
     var quantity: Int? = 0,
     var timestamp: Long,
-    var mealType:String,
+    var Type:String,
     var isPrivate:Boolean=false,
-    var isLocal :Boolean
+    var isLocal :Boolean =false
 
 ) {
     constructor() : this(
@@ -41,7 +44,7 @@ data class Meal(
         0,
         0,
         "",
-        false,true
+        false,false
     )
 }
 

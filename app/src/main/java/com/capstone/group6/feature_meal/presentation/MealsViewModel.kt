@@ -4,33 +4,24 @@ package com.capstone.group6.feature_meal.presentation
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.group6.MealApp
-import com.capstone.group6.feature_meal.domain.model.CuisineType
-import com.capstone.group6.feature_meal.domain.model.DietaryTag
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.domain.model.User
 import com.capstone.group6.feature_meal.domain.repository.MealRepository
 import com.capstone.group6.feature_meal.domain.util.MealOrder
-import com.capstone.group6.feature_meal.domain.util.OrderType
 import com.capstone.group6.feature_meal.presentation.meals.MealEvents
 import com.capstone.group6.feature_meal.presentation.meals.MealState
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -55,50 +46,26 @@ class MealsViewModel @Inject constructor(
     private var getNoteJob: Job? = null
 
 
-    fun onEvent(event: MealEvents) {
-        when (event) {
-            is MealEvents.Order -> {
-
-                if (state.value.mealOrder::class == event.mealOrder::class &&
-                    state.value.mealOrder.orderType == event.mealOrder.orderType
-                ) {
-                    return
-                }
-                getMeals(event.mealOrder,false)
-            }
-
-            is MealEvents.DeleteMeal -> {
-                viewModelScope.launch {
-                    mealRepository.delete(event.meal)
-                    recentlyDeleted = event.meal
-                }
-            }
-
-
-            is MealEvents.ToggleOrderSelection -> {
-                val currentState = state.value
-                val updatedState = MealState(
-                    meals = currentState.meals,
-                    mealOrder = currentState.mealOrder,
-                    isOrderSelectionVisible = !currentState.isOrderSelectionVisible
-                )
-                _state.value = updatedState
-            }
-        }
+    fun filterMeals(
+        mealType: String,
+        ingredients: String,
+        isVegetarian: Boolean,
+        isVegan: Boolean,
+        isDairy: Boolean,
+        isGluten: Boolean,
+        isLocal: Boolean
+    ): Flow<List<Meal>> {
+        return mealRepository.filterMeals(
+            mealType,
+            ingredients,
+            isVegetarian,
+            isVegan,
+            isDairy,
+            isGluten,
+            isLocal
+        )
     }
 
-    private fun getMeals(mealOrder: MealOrder,isLocal:Boolean) {
-        getNoteJob?.cancel()
-        mealRepository.getMeals(isLocal).onEach { meal ->
-            val updatedValue = MealState(
-                meals = meal,
-                mealOrder = mealOrder
-            )
-            _state.value = updatedValue
-        }
-            .launchIn(viewModelScope)
-
-    }
 
     private fun addMeal(meal: Meal) {
         viewModelScope.launch {
@@ -106,14 +73,9 @@ class MealsViewModel @Inject constructor(
         }
     }
 
-    fun fetchMeals(isLocal:Boolean): Flow<List<Meal>> {
+    fun fetchMeals(isLocal: Boolean): Flow<List<Meal>> {
         return mealRepository.getMeals(isLocal)
 
-    }
-
-
-    fun searchMeals(searchQuery: String): Flow<List<Meal>> {
-        return mealRepository.searchQuery(searchQuery)
     }
 
     fun readFireStoreData() {
@@ -135,6 +97,7 @@ class MealsViewModel @Inject constructor(
 
 
                         var meal = document.toObject(Meal::class.java)
+                        meal.isLocal =false
                         meal?.let {
                             // Add userId manually
 //                            it.userId = id
@@ -165,7 +128,8 @@ class MealsViewModel @Inject constructor(
     private suspend fun getImages(title: String): String? {
         return withContext(Dispatchers.IO) {
             val storageReference = FirebaseStorage.getInstance().reference
-            val imageReference = storageReference.child("${removeCharactersAfterSpace(title.lowercase())}.jpeg")
+            val imageReference =
+                storageReference.child("${removeCharactersAfterSpace(title.lowercase())}.jpeg")
 
             try {
                 Log.d("TAG", "getImages: ${imageReference}")

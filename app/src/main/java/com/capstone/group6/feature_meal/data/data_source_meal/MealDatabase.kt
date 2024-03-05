@@ -13,7 +13,7 @@ import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.domain.model.User
 
 @Database(entities = [Meal::class,User::class], version = 1)
-@TypeConverters(MealConverters::class,MealListConverters::class)
+@TypeConverters(MealConverters::class,MealListConverters::class,ArrayListConverter::class)
 abstract  class MealDatabase :RoomDatabase() {
 
     abstract val mealDao:MealDao

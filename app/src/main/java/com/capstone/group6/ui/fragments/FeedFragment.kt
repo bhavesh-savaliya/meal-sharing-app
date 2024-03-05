@@ -10,10 +10,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -24,10 +28,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.group6.Constant.Companion.startActivity
 import com.capstone.group6.R
+import com.capstone.group6.databinding.FilterLayoutBinding
 import com.capstone.group6.databinding.FragmentFeedBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
+import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.FeedsAdapter
 import kotlinx.coroutines.launch
 import org.openjdk.javax.tools.Tool
@@ -83,11 +90,92 @@ class FeedFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return false
+                val id: Int = menuItem.itemId
+                if (id == R.id.filter) {
+                    filterSet()
+                }
+                if (id == R.id.add) {
+                    activity?.startActivity(MealPlannerActivity::class.java)
+                }
+
+                return true
             }
 
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun filterSet() {
+        val builder = context?.let { AlertDialog.Builder(it, R.style.CustomAlertDialog) }
+
+        val filterLayoutBinding = FilterLayoutBinding.inflate(layoutInflater);
+
+        val dialog: AlertDialog = builder!!.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+
+        dialog.setContentView(filterLayoutBinding.root);
+        val spinner = filterLayoutBinding.spinnerMealType
+        val adapter = context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.meal_types, android.R.layout.simple_spinner_item
+            )
+        }
+        adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spinner.setSelection(0)
+        spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?, position: Int, id: Long
+                ) {
+                    (parent.getChildAt(0) as TextView).setTextColor(Color.BLACK)
+                    (parent.getChildAt(0) as TextView)
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        spinner.adapter = adapter
+        filterLayoutBinding.buttonApplyFilter.setOnClickListener {
+            val selectedMealType = filterLayoutBinding.spinnerMealType.selectedItem as String
+            applyFilter(filterLayoutBinding)
+            dialog.dismiss()
+        }
+        filterLayoutBinding.buttonReset.setOnClickListener {
+            readFirebaseData()
+            dialog.dismiss()
+        }
+        filterLayoutBinding.close.setOnClickListener { dialog.dismiss() }
+    }
+
+    private fun applyFilter(filterLayoutBinding: FilterLayoutBinding) {
+        val mealType = filterLayoutBinding.spinnerMealType.selectedItem.toString()
+
+        val ingredients = filterLayoutBinding.editTextIngredients.text.toString()
+        val vegetarian = filterLayoutBinding.checkboxVegetarian.isChecked
+        val vegan = filterLayoutBinding.checkboxVegan.isChecked
+        val dairy = filterLayoutBinding.checkboxDairyfree.isChecked
+        val gluten = filterLayoutBinding.checkboxGluten.isChecked
+        lifecycleScope.launch {
+            mealsViewModel.filterMeals(
+                mealType,
+                ingredients,
+                vegetarian,
+                vegan,
+                dairy,
+                gluten,
+                true
+            ).collect()
+            {
+                Log.d(TAG, "applyFilter: $it")
+                mealMutableList = it as ArrayList<Meal>
+                feedsAdapter.setFilterList(mealMutableList)
+            }
+        }
+
     }
 
     private fun setUpSearch() {
@@ -131,7 +219,7 @@ class FeedFragment : Fragment() {
     private fun readFirebaseData() {
         mealsViewModel.readFireStoreData()
         lifecycleScope.launch {
-            mealsViewModel.fetchMeals(true).collect { meals ->
+            mealsViewModel.fetchMeals(false).collect { meals ->
                 Log.d(TAG, "readFirebaseData: ${meals}")
                 mealMutableList = meals as ArrayList<Meal>
                 feedsAdapter.setFilterList(mealMutableList)
@@ -139,8 +227,6 @@ class FeedFragment : Fragment() {
 
         }
     }
-
-
 
 
 }

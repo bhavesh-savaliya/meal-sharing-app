@@ -30,4 +30,33 @@ interface MealDao {
     @Query("SELECT * FROM meal WHERE title LIKE :searchQuery OR description LIKE :searchQuery OR dietarytags LIKE :searchQuery OR ingredients LIKE :searchQuery")
      fun searchQuery(searchQuery: String): Flow<List<Meal>>
 
+
+    @Query("SELECT * FROM Meal WHERE Type = :mealType")
+    fun getMealsByMealType(mealType: String): Flow<List<Meal>>
+
+    @Query("SELECT * FROM Meal WHERE ingredients LIKE '%' || :ingredients || '%'")
+    fun getMealsByIngredients(ingredients: String): Flow<List<Meal>>
+
+    @Query("SELECT * FROM Meal WHERE dietaryTags LIKE '%' || :dietaryTags || '%'")
+    fun getMealsByDietaryTags(dietaryTags: String): Flow<List<Meal>>
+
+    @Query("SELECT * FROM Meal WHERE Type = :mealType OR :ingredient IN (SELECT ingredients FROM Meal)")
+    fun getMealsByTypeAndIngredients(mealType: String, ingredient: String): Flow<List<Meal>>
+
+    @Query("SELECT * FROM Meal WHERE Type = :mealType")
+    fun getMealsByType(mealType: String): Flow<List<Meal>>
+
+
+
+    @Query("SELECT * FROM Meal WHERE (dietarytags = :vegetarian OR :vegetarian = 0) " +
+            "OR (dietarytags = :vegan OR :vegan = 0) " +
+            "OR (dietarytags = :glutenFree OR :glutenFree = 0) " +
+            "OR (dietarytags = :dairyFree OR :dairyFree = 0)")
+    fun getFilteredMeals(
+        vegetarian: Boolean,
+        vegan: Boolean,
+        glutenFree: Boolean,
+        dairyFree: Boolean
+    ): Flow<List<Meal>>
+
 }

@@ -50,6 +50,7 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
         val userName = binding.tvUserName
         val userImage = binding.ivUserImage
         val prefix = binding.tvPrefix
+        val mealType = binding.tvMealType
     }
 
     val TAG = "FeedsAdapter"
@@ -100,8 +101,8 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
                 endIndex,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
+            holder.mealType.text = "Meal Type: ${feed.Type}"
             holder.dietaryTag.text = spannable
-
             holder.totalLikes.text = "" + feed.likes
             holder.userName.text = feed.user?.name ?: ""
 

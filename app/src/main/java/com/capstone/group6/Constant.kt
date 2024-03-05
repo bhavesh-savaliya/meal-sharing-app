@@ -13,18 +13,20 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.IngredientsAdapter
 import com.capstone.group6.ui.interfaces.AdapterOnClick
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.storage.FirebaseStorage
 
 class Constant {
     companion object {
@@ -100,14 +102,14 @@ class Constant {
         }
         // Inside your activity
 
-        fun showDietaryTagsDialog(etDietaryTags:EditText,context: Context) {
+        fun showDietaryTagsDialog(etDietaryTags:EditText,context: Context ,
+                                  onData: (String) -> Unit) {
             val dialogView = LayoutInflater.from(context).inflate(R.layout.dietary_tags_dialog, null)
 
             val checkboxVegetarian = dialogView.findViewById<CheckBox>(R.id.checkbox_vegetarian)
             val checkboxVegan = dialogView.findViewById<CheckBox>(R.id.checkbox_vegan)
             val checkboxGlutenFree = dialogView.findViewById<CheckBox>(R.id.checkbox_gluten_free)
-            // Initialize more checkboxes if needed
-
+            val checkboxDairy = dialogView.findViewById<CheckBox>(R.id.checkbox_dairy)
             val dialog = AlertDialog.Builder(context)
                 .setView(dialogView)
                 .setTitle("Select Dietary Tags")
@@ -115,7 +117,6 @@ class Constant {
                 .create()
 
             dialogView.findViewById<Button>(R.id.btn_apply).setOnClickListener {
-                // Handle apply button click
                 val selectedDietaryTags = mutableListOf<String>()
                 if (checkboxVegetarian.isChecked) {
                     selectedDietaryTags.add("Vegetarian")
@@ -126,17 +127,40 @@ class Constant {
                 if (checkboxGlutenFree.isChecked) {
                     selectedDietaryTags.add("Gluten-Free")
                 }
-                // Add more dietary tags as needed
+                if (checkboxDairy.isChecked) {
+                    selectedDietaryTags.add("Dairy-Free")
+                }
 
-                // Handle the selected dietary tags here, for example:
-                // You can update the MultiAutoCompleteTextView with the selected dietary tags
+
                 val selectedTagsString = selectedDietaryTags.joinToString(", ")
+                onData(selectedTagsString)
                 etDietaryTags.setText(selectedTagsString)
 
                 dialog.dismiss()
             }
 
             dialog.show()
+        }
+
+        fun uploadImage(imageUri: Uri, storage: FirebaseStorage,
+                        onSuccess: (String) -> Unit,
+                        onFailure: (Exception) -> Unit) {
+            val userName = MealApp.prefs1?.isname
+            val filename = "${userName}.jpg"
+            val storageRef = storage.reference.child("images/$filename")
+
+            storageRef.putFile(imageUri)
+                .addOnSuccessListener { taskSnapshot ->
+                    onSuccess("")
+//                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+//                        val downloadUrl = uri.toString()
+//                        Log.d("TAG", "uploadImage: $downloadUrl")
+//                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("TAG", "uploadImage: ${exception.message}")
+                    onFailure(exception)
+                }
         }
 
 
