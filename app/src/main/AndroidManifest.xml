@@ -22,7 +22,7 @@
             android:name=".ui.MealPlannerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".ui.ProfileActivity"
             android:exported="true"
             android:theme="@style/Theme.Tiffinserviceapp">
 
@@ -31,9 +31,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+
+        <activity
+            android:name=".ui.SplashScreenActivity"
+            android:exported="true" />
 
         <activity
             android:name=".ui.FeedDetailsActivity"

@@ -7,7 +7,7 @@ class Prefs (context: Context)
 {
     private var APP_PREF_INT_EXAMPLE = "com.capstone.group6";
     private var IsLanguageShown= "IsLanguageShown";
-    private var isPrivacyAccept="isPrivacyAccepted"
+    private var isName="userName"
     private var IntroScreen= "IntroScreen";
 
     private val preferences: SharedPreferences = context.getSharedPreferences(APP_PREF_INT_EXAMPLE,Context.MODE_PRIVATE)
@@ -20,9 +20,9 @@ class Prefs (context: Context)
         get() = preferences.getBoolean(IsLanguageShown, false)
         set(value) = preferences.edit().putBoolean(IsLanguageShown, value).apply()
 
-    var isPrivacyAccepted: Boolean
-        get() = preferences.getBoolean(isPrivacyAccept, false)
-        set(value) = preferences.edit().putBoolean(isPrivacyAccept, value).apply()
+    var isname: String?
+        get() = preferences.getString(isName, "")
+        set(value) = preferences.edit().putString(isName, value).apply()
 
     var languageCode: String?
         get() = preferences.getString("languageCode", "en")
