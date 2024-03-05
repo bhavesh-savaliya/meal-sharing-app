@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_below="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/filter_by_meal_type"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner_meal_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/meal_types"
+            android:theme="@style/spinnerTheme" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Filter by Ingredients"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+
+            android:hint="@string/enter_ingredients_comma_separated" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/filter_by_dietary_tags"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkbox_vegetarian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vegetarian" />
+
+        <CheckBox
+            android:id="@+id/checkbox_vegan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vegan" />
+
+        <CheckBox
+            android:id="@+id/checkbox_gluten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gluten_free" />
+
+        <CheckBox
+            android:id="@+id/checkbox_dairyfree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dairy_free" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/button_reset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:backgroundTint="#E1DFDF"
+                android:text="@string/reset"
+                android:textColor="@color/black"
+                app:background="@drawable/bg_round_corner" />
+
+            <Button
+                android:id="@+id/button_apply_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/apply_filter" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:src="@drawable/ic_close"
+        android:tint="@color/black"
+        android:padding="@dimen/_5sdp"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

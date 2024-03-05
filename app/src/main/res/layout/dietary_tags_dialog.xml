@@ -31,7 +31,13 @@
         android:id="@+id/checkbox_gluten_free"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gluten-Free"/>
+        android:text="Gluten Free"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_dairy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dairy"/>
 
     <!-- Add more dietary tags as needed -->
 
