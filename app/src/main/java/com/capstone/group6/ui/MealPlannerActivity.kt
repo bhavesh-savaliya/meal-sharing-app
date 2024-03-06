@@ -62,10 +62,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
     private fun setIngredients() {
         binding.etIngredients.setOnClickListener {
-            showBottomSheetDialog(this, onData = {
-
-
-            })
+            showBottomSheetDialog(this)
         }
         binding.etDietaryTags.setOnClickListener {
             showDietaryTagsDialog(binding.etDietaryTags, this, onData = {
