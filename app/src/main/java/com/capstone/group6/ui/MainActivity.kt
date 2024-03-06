@@ -6,10 +6,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.capstone.group6.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
-import com.capstone.group6.Constant
-import com.capstone.group6.Constant.Companion.startActivity
-import com.capstone.group6.R
 import com.capstone.group6.feature_meal.domain.repository.MealRepository
+
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -24,9 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         navigationSetUp()
-        bottomNavigationClick()
+       // bottomNavigationClick()
 
     }
 
@@ -37,14 +34,14 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(binding.bottomNavigationView, navController)
     }
 
-    private fun bottomNavigationClick() {
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.userFragment -> startActivity(MealPlannerActivity::class.java)
-            }
-            true
-        }
-    }
+//    private fun bottomNavigationClick() {
+//        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.userFragment -> startActivity(MealPlannerActivity::class.java)
+//            }
+//            true
+//        }
+//    }
 
 
 }

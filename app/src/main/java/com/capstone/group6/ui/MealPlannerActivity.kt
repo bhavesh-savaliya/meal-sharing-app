@@ -3,30 +3,37 @@ package com.capstone.group6.ui
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.group6.Constant.Companion.showBottomSheetDialog
 import com.capstone.group6.Constant.Companion.showDietaryTagsDialog
+import com.capstone.group6.Constant.Companion.uploadImage
 import com.capstone.group6.MealApp
 import com.capstone.group6.R
 import com.capstone.group6.databinding.ActivityMealPlanBinding
 import com.capstone.group6.feature_meal.domain.model.CuisineType
+import com.capstone.group6.feature_meal.domain.model.DietaryTag
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.domain.model.User
-import com.capstone.group6.feature_meal.domain.util.MealOrder
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
 import com.capstone.group6.ui.interfaces.AdapterOnClick
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Random
 
 
 @AndroidEntryPoint
@@ -36,6 +43,10 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
     val mealTypes =
         arrayOf("Breakfast", "Lunch", "Dinner", "Snack", "Dessert", "Brunch", "Appetizer")
     var selectedMeal = -1
+    var imgUri: Uri? = null
+     var quantity:Int =1
+    var dietaryTag:String = ""
+    var uploadedUri:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealPlanBinding.inflate(layoutInflater)
@@ -48,19 +59,26 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
     }
 
+
     private fun setIngredients() {
         binding.etIngredients.setOnClickListener {
-            showBottomSheetDialog(this)
+            showBottomSheetDialog(this, onData = {
+
+
+            })
         }
         binding.etDietaryTags.setOnClickListener {
-            showDietaryTagsDialog(binding.etDietaryTags, this)
+            showDietaryTagsDialog(binding.etDietaryTags, this, onData = {
+                dietaryTag=it
+
+            })
         }
 
 
         val btnDecrement = binding.btnDecrement
         val btnIncrement = binding.btnIncrement
 
-        var quantity = 1
+        quantity = 1
 
         binding.tvQuantity.text = quantity.toString()
 
@@ -80,9 +98,27 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
     }
 
     private fun setUpView() {
-        binding.btnUploadImage.setOnClickListener {
+        binding.back.setOnClickListener { finish() }
+        binding.ivCamera.setOnClickListener {
             val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             changeImage.launch(pickImg)
+        }
+        val storage = Firebase.storage
+        binding.btnUploadImage.setOnClickListener {
+            imgUri?.let {
+                uploadImage(it, storage, onSuccess = { downloadUrl ->
+                    Log.d("TAG", "Upload successful. Download URL: $downloadUrl")
+                    uploadedUri=downloadUrl
+                    Toast.makeText(this, "Uploaded Successfully..", Toast.LENGTH_SHORT).show()
+                    binding.btnUploadImage.text = "Change Image"
+                },
+                    onFailure = { exception ->
+                        Log.e("TAG", "Upload failed: $exception")
+                    }
+
+
+                )
+            }
         }
         val spinnerMealType = binding.spinnerMealType
 
@@ -93,7 +129,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
         spinnerMealType.adapter = adapter
 
-        spinnerMealType.setSelection(0)
+        //spinnerMealType.setSelection(0)
         spinnerMealType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -114,6 +150,24 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         }
 
         binding.btnSaveRecipe.setOnClickListener {
+            if (binding.etRecipeTitle.text?.isEmpty()!!) {
+                // Recipe title is empty, show error
+                binding.etRecipeTitle.error = "Recipe title cannot be empty"
+                return@setOnClickListener
+            }
+            if (binding.etDescription.text.isEmpty()) {
+                // Description is empty, show error
+                binding.etDescription.error = "Description cannot be empty"
+                return@setOnClickListener
+            }
+            val selectedItem = binding.spinnerCuisineType.selectedItem?.toString()
+            if (selectedItem.isNullOrEmpty()) {
+                val errorText = "Please select an option"
+                ( binding.spinnerCuisineType.selectedView as? TextView)?.error = errorText
+                return@setOnClickListener
+            } else {
+
+            }
             save()
         }
 
@@ -126,7 +180,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data = it.data
-                val imgUri = data?.data
+                imgUri = data?.data
                 binding.ivRecipeImage.setImageURI(imgUri)
                 binding.ivCamera.visibility = View.GONE
                 binding.imgAlt.visibility = View.GONE
@@ -137,7 +191,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         var adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, CuisineType.values())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCuisineType.adapter = adapter
-        binding.spinnerCuisineType.setSelection(0)
+//        binding.spinnerCuisineType.setSelection(0)
         binding.spinnerCuisineType.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -175,7 +229,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
         }
         meal.description = binding.etDescription.text.toString()
-        val selectedCuisine = binding.spinnerCuisineType.getSelectedItem()
+        val selectedCuisine = binding.spinnerCuisineType.selectedItem
         var cuisineType: CuisineType = CuisineType.Gujarati
         when (selectedCuisine) {
             "Italian" -> cuisineType = CuisineType.Italian
@@ -186,34 +240,56 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
             "South Indian" -> cuisineType = CuisineType.SouthIndian
             else -> {}
         }
+
+
         meal.cuisineType = cuisineType
+
+      val dietary:DietaryTag=  when (dietaryTag) {
+            "Vegan" ->   DietaryTag.Vegan
+            "Vegetarian" -> DietaryTag.Vegetarian
+            "Dairy-Free" ->  DietaryTag.Dairyfree
+            "Gluten-Free" ->  DietaryTag.Glutenfree
+            else -> DietaryTag.Vegetarian
+        }
+        meal.dietarytags=dietary
+
         meal.count = binding.tvQuantity.text.toString()
 
 
-        meal.mealType = mealTypes[selectedMeal]
+        meal.Type = mealTypes[selectedMeal]
         val id: String = "" + System.currentTimeMillis()
-        var name = "Nirali"
+        var name = MealApp.prefs1?.isname
         val user = User(name = name, userId = id)
-        meal.user=user
-        meal.image = ""
-        meal.ingredients = "onion"
-        meal.likes = 5
+        meal.user = user
+        meal.image = uploadedUri
+        val savedIngredients = MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf())
+        val selectedIngredients = savedIngredients
+        meal.ingredients = selectedIngredients
+        val randomNumber = kotlin.random.Random.nextInt(1, 101)
+        meal.likes = randomNumber
         meal.timestamp = System.currentTimeMillis()
-        meal.isLocal =true
+        meal.isLocal = true
 
 
         lifecycleScope.launch {
             mealsViewModel.mealRepository.insertMeal(meal)
+            finish()
         }
     }
 
 
-    override fun onClick(item: String, position: Int) {
-        MealApp.prefs1!!.ingredient = item
-        MealApp.prefs1!!.positionTone = position
+    override fun onClick(item: ArrayList<String>, position: Int) {
+//        MealApp.prefs1!!.saveStringArray("selectedIngredients",item)
+//        MealApp.prefs1!!.positionTone = position
+        Log.d("onClick", "onClick: ${item}")
+
+
     }
 
     override fun onClickIng(item: String, bottomSheetDialog: BottomSheetDialog, position: Int) {
+        val selectedIngredients = MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf()) ?: emptyList()
+        val textToShow = selectedIngredients.joinToString(", ")
 
+        binding.etIngredients.text = textToShow.lowercase()
     }
 }

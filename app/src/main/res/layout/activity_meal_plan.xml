@@ -14,7 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="@dimen/_35sdp"
@@ -24,6 +26,8 @@
                 android:src="@drawable/ic_back"
                 app:tint="@color/black" />
 
+
+</RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -193,10 +197,14 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/edit_text_bg"
                     android:drawableStart="@drawable/ic_add"
+                    android:drawableTint="@color/black"
                     android:drawablePadding="@dimen/_5sdp"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
+                    android:textAllCaps="false"
                     android:hint="@string/ingredients"
+                    android:textColor="@color/black"
+
                     android:padding="@dimen/_8sdp"
                     android:textSize="@dimen/_12sdp" />
 
@@ -207,6 +215,7 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/edit_text_bg"
                     android:drawableStart="@drawable/ic_add"
+                    android:drawableTint="@color/black"
                     android:drawablePadding="@dimen/_5sdp"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
@@ -217,6 +226,7 @@
 
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/et_mealType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -290,7 +300,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/increment_button_description"
-                        android:src="@drawable/ic_add" />
+                        android:src="@drawable/ic_add"
+                        android:tint="@color/black"/>
                 </LinearLayout>
 
                 <Button

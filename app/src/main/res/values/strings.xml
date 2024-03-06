@@ -49,4 +49,6 @@
     <string name="filter_by_meal_type">Filter by Meal Type</string>
     <string name="enter_your_name">Enter your name</string>
     <string name="welcome_to_mealshare">Welcome to MealShare</string>
+    <string name="no_meals_yet">No Meals yet</string>
+    <string name="meals">Meals</string>
 </resources>

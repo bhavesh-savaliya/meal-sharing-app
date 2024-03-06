@@ -1,7 +1,5 @@
 package com.capstone.group6.ui
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,14 +26,14 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Handler(Looper.myLooper()!!).postDelayed({
             startActivity(MainActivity::class.java)
-            val intent = Intent(this, MainActivity::class.java)
-            val options = ActivityOptions.makeCustomAnimation(
-                this,
-                R.anim.slide_in_right,
-                R.anim.slide_out_left
-            )
-
-            startActivity(intent, options.toBundle())
+//            val intent = Intent(this, MainActivity::class.java)
+//            val options = ActivityOptions.makeCustomAnimation(
+//                this,
+//                R.anim.slide_in_right,
+//                R.anim.slide_out_left
+//            )
+//
+//            startActivity(intent, options.toBundle())
             finish()
         }, SPLASH_DURATION)
     }

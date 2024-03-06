@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.group6.MealApp
 import com.capstone.group6.R
 import com.capstone.group6.databinding.LayoutIngredientsBinding
 import com.capstone.group6.ui.MealPlannerActivity
@@ -28,8 +29,10 @@ class IngredientsAdapter(
     var ingredients = ingredientsList
     private val selected: ArrayList<String> = arrayListOf()
 
+
     companion object {
         var selectedItemPosition: Int = 0
+        public var selectedIngredients: ArrayList<String> = arrayListOf()
     }
 
     class LanguageViewHolder(
@@ -53,12 +56,22 @@ class IngredientsAdapter(
             }
             binding.cardLayout.setOnClickListener {
                 selectedItemPosition = adapterPosition
-                adapterOnClickListner.onClick(item, adapterPosition)
                 selected.add(item)
+                val isSelected = selectedIngredients.contains(item)
+                if (isSelected) {
+                    selectedIngredients = selectedIngredients.filter { it != item } as ArrayList<String>
+
+                } else {
+                    selectedIngredients += item.lowercase()
+                }
+
                 Log.d("bind:", "bind: $adapterPosition")
                 adapter.notifyDataSetChanged()
 
             }
+            MealApp.prefs1!!.saveStringArray("selectedIngredients",selectedIngredients)
+            MealApp.prefs1!!.positionTone = adapterPosition
+
 
 
         }
@@ -85,6 +98,11 @@ class IngredientsAdapter(
 
     override fun getItemCount(): Int {
         return ingredients.size
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        adapterOnClick.onClick(selectedIngredients, 0)
     }
 }
 

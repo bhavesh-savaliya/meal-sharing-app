@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.domain.model.User
 import com.capstone.group6.feature_meal.domain.repository.MealRepository
-import com.capstone.group6.feature_meal.domain.util.MealOrder
-import com.capstone.group6.feature_meal.presentation.meals.MealEvents
 import com.capstone.group6.feature_meal.presentation.meals.MealState
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
@@ -65,6 +63,7 @@ class MealsViewModel @Inject constructor(
             isLocal
         )
     }
+
 
 
     private fun addMeal(meal: Meal) {
@@ -124,7 +123,6 @@ class MealsViewModel @Inject constructor(
 
     }
 
-
     private suspend fun getImages(title: String): String? {
         return withContext(Dispatchers.IO) {
             val storageReference = FirebaseStorage.getInstance().reference
@@ -139,7 +137,6 @@ class MealsViewModel @Inject constructor(
                 imageUrl
             } catch (e: Exception) {
                 Log.d("TAG", "getImages: ${e.message}")
-                // Handle any errors that may occur while getting the download URL
                 null
             }
         }
@@ -166,4 +163,5 @@ class MealsViewModel @Inject constructor(
     override fun onCleared() {
         disposable?.dispose()
     }
+
 }

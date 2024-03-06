@@ -8,12 +8,10 @@ package com.capstone.group6.ui.adapters
 
 import android.app.Activity
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -22,7 +20,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +50,7 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
         val mealType = binding.tvMealType
     }
 
-    val TAG = "FeedsAdapter"
+    private val TAG = "FeedsAdapter"
 
     private val differCallback = object : DiffUtil.ItemCallback<Meal>() {
 
@@ -85,12 +82,14 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val feed = feedList[position]
         holder.itemView.apply {
+            val uri: Uri? = if (feed.image.isNullOrEmpty()) null else Uri.parse(feed.image)
 
-            Glide.with(this).load(feed.image).placeholder(R.drawable.placeholder)
+            Glide.with(this).load(uri).placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder).into(holder.ivImage)
             holder.tvTitle.text = feed.title
             holder.tvDescription.text = feed.description
             holder.cuisineType.text = "Cuisine Type: ${feed.cuisineType.name}"
+            holder.mealType.text ="Meal Type: ${feed.Type}"
             val fullText = "Dietary Tag: ${feed.dietarytags.name}"
             val spannable = SpannableString(fullText)
             val startIndex = fullText.indexOf(feed.dietarytags.name)
@@ -110,7 +109,6 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
 
             setOnClickListener {
                 activity.startActivity(FeedDetailsActivity::class.java,position)
-                Log.d(TAG, "onBindViewHolder: $it")
                 val intent = Intent(context, FeedDetailsActivity::class.java).apply {
                     putExtra("position", position)
                 }
@@ -140,12 +138,14 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
 
         ivUserImage.setBackgroundResource(R.drawable.circle)
 
-        // Get the background drawable and set the solid color
+
         val backgroundDrawable = ivUserImage.background as GradientDrawable
+
         backgroundDrawable.setColor(randomColor)
 
         val prefix = userName.substring(0, 1).uppercase()
         textView.text = prefix
+        Log.d(TAG, "setUserDetails: $prefix$randomColor")
     }
 
 

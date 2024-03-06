@@ -57,7 +57,7 @@ class FeedDetailsActivity : AppCompatActivity() {
         binding.tvDescription.text = feed.description
         binding.tvCuisineType.text = "Cuisine Type : " + feed.cuisineType.name.lowercase()
         binding.tvDietaryType.text = "Dietary Tags : " + feed.dietarytags.name.lowercase()
-        binding.totalLikes.text = feed.likes.toString()
+        binding.totalLikes.text = ""+feed.likes
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

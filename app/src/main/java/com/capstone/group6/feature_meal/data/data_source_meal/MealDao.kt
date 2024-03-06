@@ -40,7 +40,7 @@ interface MealDao {
     @Query("SELECT * FROM Meal WHERE dietaryTags LIKE '%' || :dietaryTags || '%'")
     fun getMealsByDietaryTags(dietaryTags: String): Flow<List<Meal>>
 
-    @Query("SELECT * FROM Meal WHERE Type = :mealType OR :ingredient IN (SELECT ingredients FROM Meal)")
+    @Query("SELECT * FROM Meal WHERE Type = :mealType OR ingredients= :ingredient IN (SELECT ingredients FROM Meal)")
     fun getMealsByTypeAndIngredients(mealType: String, ingredient: String): Flow<List<Meal>>
 
     @Query("SELECT * FROM Meal WHERE Type = :mealType")
