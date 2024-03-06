@@ -58,6 +58,7 @@ class Constant {
                 )
             }
             bottomSheetDialog.findViewById<ImageView>(R.id.close)?.setOnClickListener {
+                adapterOnClick.onClickIng("",bottomSheetDialog,0)
                 bottomSheetDialog.dismiss()
             }
 

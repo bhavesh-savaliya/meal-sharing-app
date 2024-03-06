@@ -226,20 +226,9 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
         }
         meal.description = binding.etDescription.text.toString()
-        val selectedCuisine = binding.spinnerCuisineType.selectedItem
-        var cuisineType: CuisineType = CuisineType.Gujarati
-        when (selectedCuisine) {
-            "Italian" -> cuisineType = CuisineType.Italian
-            "Mexican" -> cuisineType = CuisineType.Mexican
-            "Chinese" -> cuisineType = CuisineType.Chinese
-            "Gujarati" -> cuisineType = CuisineType.Gujarati
-            "Punjabi" -> cuisineType = CuisineType.Punjabi
-            "South Indian" -> cuisineType = CuisineType.SouthIndian
-            else -> {}
-        }
+        val selectedCuisine = binding.spinnerCuisineType.selectedItem  as CuisineType
 
-
-        meal.cuisineType = cuisineType
+        meal.cuisineType = selectedCuisine
 
       val dietary:DietaryTag=  when (dietaryTag) {
             "Vegan" ->   DietaryTag.Vegan
@@ -284,8 +273,10 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
     }
 
     override fun onClickIng(item: String, bottomSheetDialog: BottomSheetDialog, position: Int) {
-        val selectedIngredients = MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf()) ?: emptyList()
+        val selectedIngredients =
+            MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf()) ?: emptyList()
         val textToShow = selectedIngredients.joinToString(", ")
+        Log.d("onClickIng", "onClickIng: ${textToShow.lowercase()}")
 
         binding.etIngredients.text = textToShow.lowercase()
     }
