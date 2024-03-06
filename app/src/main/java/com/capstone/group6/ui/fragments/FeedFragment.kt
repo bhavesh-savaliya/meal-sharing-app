@@ -1,7 +1,6 @@
 package com.capstone.group6.ui.fragments
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,13 +14,11 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.TextView
 import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -37,7 +34,6 @@ import com.capstone.group6.feature_meal.presentation.MealsViewModel
 import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.FeedsAdapter
 import kotlinx.coroutines.launch
-import org.openjdk.javax.tools.Tool
 
 
 class FeedFragment : Fragment() {
@@ -103,6 +99,59 @@ class FeedFragment : Fragment() {
 
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+
+
+    private fun setUpSearch() {
+        toolbar = binding.toolbar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).title = getString(R.string.app_name)
+        toolbar.setTitleTextColor(Color.WHITE)
+        setToolbarMenu()
+
+
+    }
+
+    private fun filterList(query: String?) {
+        val queryTo = query?.lowercase() ?: ""
+        var filterList = arrayListOf<Meal>()
+        mealMutableList.filter { item ->
+            item.title?.lowercase()?.contains(queryTo) == true ||
+                    item.cuisineType.name?.lowercase()?.contains(queryTo) == true ||
+                    item.dietarytags.name?.lowercase()?.contains(queryTo) == true
+        }.forEach { filteredItem ->
+            filterList.add(filteredItem)
+        }
+
+        if (filterList.isEmpty()) {
+
+        } else {
+            feedsAdapter.setFilterList(filterList)
+        }
+
+    }
+
+
+    private fun setUpRecyclerView() {
+        feedsAdapter = FeedsAdapter(mealMutableList, activity!!)
+        binding.rvFeeds.apply {
+            adapter = feedsAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+    }
+
+    private fun readFirebaseData() {
+
+        mealsViewModel.readFireStoreData()
+        lifecycleScope.launch {
+            mealsViewModel.fetchMeals(false).collect { meals ->
+                Log.d(TAG, "readFirebaseData: ${meals}")
+                mealMutableList = meals as ArrayList<Meal>
+                feedsAdapter.setFilterList(mealMutableList)
+            }
+
+        }
     }
 
     private fun filterSet() {
@@ -176,56 +225,6 @@ class FeedFragment : Fragment() {
             }
         }
 
-    }
-
-    private fun setUpSearch() {
-        toolbar = binding.toolbar
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        (requireActivity() as AppCompatActivity).title = getString(R.string.app_name)
-        toolbar.setTitleTextColor(Color.WHITE)
-        setToolbarMenu()
-
-    }
-
-    private fun filterList(query: String?) {
-        val queryTo = query?.lowercase() ?: ""
-        var filterList = arrayListOf<Meal>()
-        mealMutableList.filter { item ->
-            item.title?.lowercase()?.contains(queryTo) == true ||
-                    item.cuisineType.name?.lowercase()?.contains(queryTo) == true ||
-                    item.dietarytags.name?.lowercase()?.contains(queryTo) == true
-        }.forEach { filteredItem ->
-            filterList.add(filteredItem)
-        }
-
-        if (filterList.isEmpty()) {
-//            Toast.makeText(activity, "No Feed found..", Toast.LENGTH_LONG)
-//                .show()
-        } else {
-            feedsAdapter.setFilterList(filterList)
-        }
-
-    }
-
-
-    private fun setUpRecyclerView() {
-        feedsAdapter = FeedsAdapter(mealMutableList, activity!!)
-        binding.rvFeeds.apply {
-            adapter = feedsAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
-    }
-
-    private fun readFirebaseData() {
-        mealsViewModel.readFireStoreData()
-        lifecycleScope.launch {
-            mealsViewModel.fetchMeals(false).collect { meals ->
-                Log.d(TAG, "readFirebaseData: ${meals}")
-                mealMutableList = meals as ArrayList<Meal>
-                feedsAdapter.setFilterList(mealMutableList)
-            }
-
-        }
     }
 
 

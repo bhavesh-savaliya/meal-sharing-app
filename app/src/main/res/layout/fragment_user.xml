@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.UserFragment">
-
+    <TextView
+        android:gravity="start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mealTitle"
+        android:textSize="@dimen/_14sdp"
+        android:fontFamily="@font/bold"
+        android:text="@string/meals"
+        android:textColor="@color/black"
+        android:padding="@dimen/_5sdp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/rvFeeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
+        android:layout_below="@+id/mealTitle"
+        />
     <TextView
         android:gravity="center"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="User" />
+        android:layout_height="wrap_content"
+        android:id="@+id/noText"
+        android:textSize="@dimen/_14sdp"
+        android:fontFamily="@font/regular"
+        android:text="@string/no_meals_yet"
+        android:textColor="@color/black"
+        android:padding="@dimen/_5sdp"/>
 
-</FrameLayout>
+</RelativeLayout>
