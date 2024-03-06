@@ -156,6 +156,12 @@ class Constant {
 //                        val downloadUrl = uri.toString()
 //                        Log.d("TAG", "uploadImage: $downloadUrl")
 //                    }
+
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        val downloadUrl = uri.toString()
+                        onSuccess(downloadUrl)
+                        Log.d("TAG", "uploadImage: $downloadUrl")
+                    }
                 }
                 .addOnFailureListener { exception ->
                     Log.d("TAG", "uploadImage: ${exception.message}")
