@@ -109,17 +109,6 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
 
             setOnClickListener {
                 activity.startActivity(FeedDetailsActivity::class.java,position)
-                val intent = Intent(context, FeedDetailsActivity::class.java).apply {
-                    putExtra("position", position)
-                }
-                val options = ActivityOptions.makeCustomAnimation(
-                    context,
-                    R.anim.slide_in_right,
-                    R.anim.slide_out_left
-                )
-
-                context.startActivity(intent, options.toBundle())
-
 
             }
         }

@@ -1,6 +1,7 @@
 package com.capstone.group6.ui.fragments
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,12 +10,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.Toast
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -102,7 +100,6 @@ class FeedFragment : Fragment() {
     }
 
 
-
     private fun setUpSearch() {
         toolbar = binding.toolbar
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
@@ -160,10 +157,12 @@ class FeedFragment : Fragment() {
         val filterLayoutBinding = FilterLayoutBinding.inflate(layoutInflater);
 
         val dialog: AlertDialog = builder!!.create()
+
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
         dialog.setContentView(filterLayoutBinding.root);
+
         val spinner = filterLayoutBinding.spinnerMealType
         val adapter = context?.let {
             ArrayAdapter.createFromResource(
@@ -188,8 +187,10 @@ class FeedFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         spinner.adapter = adapter
+        dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         filterLayoutBinding.buttonApplyFilter.setOnClickListener {
             val selectedMealType = filterLayoutBinding.spinnerMealType.selectedItem as String
+            filterLayoutBinding.spinnerMealType.background.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
             applyFilter(filterLayoutBinding)
             dialog.dismiss()
         }
@@ -198,12 +199,13 @@ class FeedFragment : Fragment() {
             dialog.dismiss()
         }
         filterLayoutBinding.close.setOnClickListener { dialog.dismiss() }
+
     }
 
     private fun applyFilter(filterLayoutBinding: FilterLayoutBinding) {
         val mealType = filterLayoutBinding.spinnerMealType.selectedItem.toString()
 
-        val ingredients = filterLayoutBinding.editTextIngredients.text.toString()
+        val ingredients = filterLayoutBinding.editTextIngredients.text.toString().lowercase()
         val vegetarian = filterLayoutBinding.checkboxVegetarian.isChecked
         val vegan = filterLayoutBinding.checkboxVegan.isChecked
         val dairy = filterLayoutBinding.checkboxDairyfree.isChecked

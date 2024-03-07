@@ -14,20 +14,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_margin="@dimen/_5sdp"
-                android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_back"
-                app:tint="@color/black" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_back"
+                    app:tint="@color/black" />
 
 
-</RelativeLayout>
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,8 +67,8 @@
                     android:fontFamily="@font/regular"
                     android:hint="@string/type_your_recipe_name_here"
                     android:inputType="text"
-                    android:textColor="@color/black"
                     android:padding="@dimen/_8sdp"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -184,10 +187,10 @@
                     android:id="@+id/spinner_cuisine_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/edit_text_bg"
                     android:hint="@string/select_cuisine"
+                    android:padding="@dimen/_10sdp"
                     android:theme="@style/spinnerTheme" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -197,15 +200,15 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/edit_text_bg"
                     android:drawableStart="@drawable/ic_add"
-                    android:drawableTint="@color/black"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTint="@color/black"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
-                    android:textAllCaps="false"
                     android:hint="@string/ingredients"
-                    android:textColor="@color/black"
-
                     android:padding="@dimen/_8sdp"
+                    android:textAllCaps="false"
+
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -215,18 +218,18 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/edit_text_bg"
                     android:drawableStart="@drawable/ic_add"
-                    android:drawableTint="@color/black"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTint="@color/black"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
-                    android:textColor="@color/black"
                     android:hint="@string/dietary_tags"
                     android:padding="@dimen/_8sdp"
+                    android:editable="false"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
 
                 <EditText
-                    android:visibility="gone"
                     android:id="@+id/et_mealType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -237,7 +240,9 @@
                     android:hint="@string/type"
                     android:inputType="text"
                     android:padding="@dimen/_8sdp"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -247,17 +252,16 @@
                     android:paddingBottom="@dimen/_5sdp"
                     android:text="@string/select_meal_type"
                     android:textSize="@dimen/_12sdp" />
+
                 <Spinner
                     android:id="@+id/spinner_meal_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/edit_text_bg"
                     android:hint="@string/meal_type"
-                    android:theme="@style/spinnerTheme"
-                    />
-
+                    android:padding="@dimen/_10sdp"
+                    android:theme="@style/spinnerTheme" />
 
 
                 <TextView
@@ -266,16 +270,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="@string/quantity"
-                    android:inputType="number"
                     android:fontFamily="@font/bold"
+                    android:inputType="number"
                     android:padding="@dimen/_8sdp"
+                    android:text="@string/quantity"
                     android:textSize="@dimen/_12sdp" />
+
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_gravity="start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageButton
@@ -301,7 +306,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/increment_button_description"
                         android:src="@drawable/ic_add"
-                        android:tint="@color/black"/>
+                        android:tint="@color/black" />
                 </LinearLayout>
 
                 <Button

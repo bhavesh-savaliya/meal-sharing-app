@@ -22,6 +22,7 @@ class ProfileActivity : AppCompatActivity() {
             binding.btnApply.visibility = View.GONE
         } else {
             startActivity(MainActivity::class.java)
+            finish()
         }
 
         setUser()

@@ -36,5 +36,11 @@
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/rounded_corner</item>
+
+    </style>
+
+    <style name="SpinnerTheme" >
+        <item name="android:background">@drawable/background</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

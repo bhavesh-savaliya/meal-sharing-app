@@ -40,8 +40,7 @@ class FeedDetailsActivity : AppCompatActivity() {
 
     private fun setUpData(position: Int) {
         lifecycleScope.launch {
-            mealsViewModel.mealRepository.getMeals(true).collect { meals ->
-
+            mealsViewModel.mealRepository.getMeals(false).collect { meals ->
                 feed = meals[position]
                 setUiData()
 

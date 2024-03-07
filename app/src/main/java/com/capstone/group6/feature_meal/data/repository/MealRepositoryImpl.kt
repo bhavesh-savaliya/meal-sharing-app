@@ -52,16 +52,16 @@ class MealRepositoryImpl(private val mealDao: MealDao) : MealRepository {
         isGluten: Boolean,
         isLocal: Boolean
     ): Flow<List<Meal>> {
-        return if (mealType.isNotBlank() && ingredients.isNotBlank()) {
-            mealDao.getMealsByTypeAndIngredients(mealType, ingredients.lowercase())
-        } else if (mealType.isNotBlank()) {
+        return if (ingredients.isNotBlank()) {
+            mealDao.getMealsByTypeAndIngredients( ingredients)
+        }
+       else if (isVegan || isVegetarian || isDairy || isGluten) {
+            mealDao.getFilteredMeals(isVegetarian, isVegan, isDairy, isGluten)
+        }
+        else if (mealType.isNotBlank()) {
             Log.d("filterMeals", "filterMeals: $mealType")
             mealDao.getMealsByType(mealType)
-        } else if (isVegan || isVegetarian || isDairy || isGluten) {
-            mealDao.getFilteredMeals(isVegetarian, isVegan, isDairy, isGluten)
-        } else if (ingredients.isNotBlank()) {
-            mealDao.getMealsByIngredients(ingredients.lowercase())
-        } else {
+        }else {
             mealDao.getMeals(isLocal)
         }
     }

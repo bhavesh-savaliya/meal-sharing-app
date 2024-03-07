@@ -7,24 +7,24 @@
     android:padding="16dp">
 
     <LinearLayout
-        android:layout_below="@+id/close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/close"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+
             android:text="@string/filter_by_meal_type"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_meal_type"
+            style="@style/SpinnerTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/meal_types"
-            android:theme="@style/spinnerTheme" />
+            android:entries="@array/meal_types" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,9 +37,11 @@
             android:id="@+id/edit_text_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/enter_ingredients_comma_separated"
             android:textColor="@color/black"
-
-            android:hint="@string/enter_ingredients_comma_separated" />
+            android:windowSoftInputMode="stateVisible" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,12 +106,13 @@
 
 
     </LinearLayout>
+
     <ImageView
         android:id="@+id/close"
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
-        android:src="@drawable/ic_close"
-        android:tint="@color/black"
+        android:layout_alignParentEnd="true"
         android:padding="@dimen/_5sdp"
-        android:layout_alignParentEnd="true"/>
+        android:src="@drawable/ic_close"
+        android:tint="@color/black" />
 </RelativeLayout>
