@@ -81,10 +81,12 @@ class IngredientsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageViewHolder {
         val binding =
             LayoutIngredientsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        Log.d("TAG", "onCreateViewHolder: " + selectedIngredients)
         return LanguageViewHolder(binding, this)
     }
 
     override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
+
         val currentIngrdient = ingredientsList[position]
         holder.bind(currentIngrdient, iconList[position],selected ,adapterOnClick)
         if (selected.contains(currentIngrdient)) {

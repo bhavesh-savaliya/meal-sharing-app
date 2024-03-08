@@ -27,6 +27,7 @@ import com.capstone.group6.feature_meal.domain.model.DietaryTag
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.domain.model.User
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
+import com.capstone.group6.ui.adapters.IngredientsAdapter
 import com.capstone.group6.ui.interfaces.AdapterOnClick
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
@@ -44,9 +45,9 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         arrayOf("Breakfast", "Lunch", "Dinner", "Snack", "Dessert", "Brunch", "Appetizer")
     var selectedMeal = -1
     var imgUri: Uri? = null
-     var quantity:Int =1
-    var dietaryTag:String = ""
-    var uploadedUri:String?=null
+    var quantity: Int = 1
+    var dietaryTag: String = ""
+    var uploadedUri: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealPlanBinding.inflate(layoutInflater)
@@ -66,7 +67,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         }
         binding.etDietaryTags.setOnClickListener {
             showDietaryTagsDialog(binding.etDietaryTags, this, onData = {
-                dietaryTag=it
+                dietaryTag = it
 
             })
         }
@@ -105,7 +106,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
             imgUri?.let {
                 uploadImage(it, storage, onSuccess = { downloadUrl ->
                     Log.d("TAG", "Upload successful. Download URL: $downloadUrl")
-                    uploadedUri=downloadUrl
+                    uploadedUri = downloadUrl
                     Toast.makeText(this, "Uploaded Successfully..", Toast.LENGTH_SHORT).show()
                     binding.btnUploadImage.text = "Change Image"
                 },
@@ -160,7 +161,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
             val selectedItem = binding.spinnerCuisineType.selectedItem?.toString()
             if (selectedItem.isNullOrEmpty()) {
                 val errorText = "Please select an option"
-                ( binding.spinnerCuisineType.selectedView as? TextView)?.error = errorText
+                (binding.spinnerCuisineType.selectedView as? TextView)?.error = errorText
                 return@setOnClickListener
             } else {
 
@@ -226,18 +227,18 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
         }
         meal.description = binding.etDescription.text.toString()
-        val selectedCuisine = binding.spinnerCuisineType.selectedItem  as CuisineType
+        val selectedCuisine = binding.spinnerCuisineType.selectedItem as CuisineType
 
         meal.cuisineType = selectedCuisine
 
-      val dietary:DietaryTag=  when (dietaryTag) {
-            "Vegan" ->   DietaryTag.Vegan
+        val dietary: DietaryTag = when (dietaryTag) {
+            "Vegan" -> DietaryTag.Vegan
             "Vegetarian" -> DietaryTag.Vegetarian
-            "Dairy-Free" ->  DietaryTag.Dairyfree
-            "Gluten-Free" ->  DietaryTag.Glutenfree
+            "Dairy-Free" -> DietaryTag.Dairyfree
+            "Gluten-Free" -> DietaryTag.Glutenfree
             else -> DietaryTag.Vegetarian
         }
-        meal.dietarytags=dietary
+        meal.dietarytags = dietary
 
         meal.count = binding.tvQuantity.text.toString()
 
@@ -275,9 +276,11 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
     override fun onClickIng(item: String, bottomSheetDialog: BottomSheetDialog, position: Int) {
         val selectedIngredients =
             MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf()) ?: emptyList()
-        val textToShow = selectedIngredients.joinToString(", ")
+        val textToShow = selectedIngredients.distinct().joinToString(", ")
         Log.d("onClickIng", "onClickIng: ${textToShow.lowercase()}")
 
         binding.etIngredients.text = textToShow.lowercase()
+
+        IngredientsAdapter.selectedIngredients.clear()
     }
 }

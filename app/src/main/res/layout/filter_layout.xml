@@ -66,13 +66,13 @@
             android:id="@+id/checkbox_gluten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gluten_free" />
+            android:text="@string/dairy_free" />
 
         <CheckBox
             android:id="@+id/checkbox_dairyfree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dairy_free" />
+            android:text="@string/gluten_free" />
 
         <LinearLayout
             android:layout_width="match_parent"
