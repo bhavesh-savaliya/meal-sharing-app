@@ -58,6 +58,7 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 prefs1?.isname = binding.etName.text.toString()
                 startActivity(MainActivity::class.java)
+                finish()
             }
 
 

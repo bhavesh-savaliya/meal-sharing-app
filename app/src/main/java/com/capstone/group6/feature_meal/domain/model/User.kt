@@ -10,7 +10,6 @@ data class User(
     @ColumnInfo(name = "id")
     var id: Int? = null,
     var name: String? = null,
-    var userId: String? = null
 
 
 )

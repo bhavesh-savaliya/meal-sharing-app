@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.FavFragment">
-
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.FeedFragment">
     <TextView
+        android:gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/favTitle"
+        android:textSize="@dimen/_14sdp"
+        android:fontFamily="@font/bold"
+        android:text="@string/no_fav_yet"
+        android:textColor="@color/black"
+        android:padding="@dimen/_5sdp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:theme="@style/Theme.Tiffinserviceapp"
+        android:layout_gravity="center"
         android:gravity="center"
+        app:title="@string/favourites"
+        android:background="@color/colorAccent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/rvFeeds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Favourites" />
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
+        />
 
-</FrameLayout>
+</RelativeLayout>

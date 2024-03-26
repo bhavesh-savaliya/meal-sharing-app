@@ -22,7 +22,7 @@ object AppModule {
             applicationContext,
             MealDatabase::class.java,
             MealDatabase.DATABASE_NAME
-        ).build()
+        ).addMigrations(MealDatabase.MIGRATION_1_2).build()
     }
 
     @Provides
@@ -30,10 +30,6 @@ object AppModule {
     fun provideMealRepository(db: MealDatabase): MealRepository {
         return MealRepositoryImpl(db.mealDao)
     }
-
-
-
-
 
 
 }

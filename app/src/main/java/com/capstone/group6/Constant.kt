@@ -20,16 +20,29 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.group6.feature_meal.domain.model.Meal
+import com.capstone.group6.feature_meal.domain.model.User
+import com.capstone.group6.ui.MainActivity
 import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.IngredientsAdapter
 import com.capstone.group6.ui.interfaces.AdapterOnClick
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.launch
 
 class Constant {
     companion object {
+
+        val VIEW_TYPE_LIST: Int = 0
+        val VIEW_TYPE_GRID: Int = 1
+        val VIEW_TYPE_DETAILS: Int = 2
+
         fun Activity.startActivity(destination: Class<*>, position: Int = 0) {
             val intent = Intent(this, destination).apply {
                 putExtra("position", position)
@@ -58,7 +71,7 @@ class Constant {
                 )
             }
             bottomSheetDialog.findViewById<ImageView>(R.id.close)?.setOnClickListener {
-                adapterOnClick.onClickIng("",bottomSheetDialog,0)
+                adapterOnClick.onClickIng("", bottomSheetDialog, 0)
                 bottomSheetDialog.dismiss()
             }
 
@@ -103,9 +116,12 @@ class Constant {
         }
         // Inside your activity
 
-        fun showDietaryTagsDialog(etDietaryTags:EditText,context: Context ,
-                                  onData: (String) -> Unit) {
-            val dialogView = LayoutInflater.from(context).inflate(R.layout.dietary_tags_dialog, null)
+        fun showDietaryTagsDialog(
+            etDietaryTags: EditText, context: Context,
+            onData: (String) -> Unit
+        ) {
+            val dialogView =
+                LayoutInflater.from(context).inflate(R.layout.dietary_tags_dialog, null)
 
             val checkboxVegetarian = dialogView.findViewById<CheckBox>(R.id.checkbox_vegetarian)
             val checkboxVegan = dialogView.findViewById<CheckBox>(R.id.checkbox_vegan)
@@ -143,9 +159,11 @@ class Constant {
             dialog.show()
         }
 
-        fun uploadImage(imageUri: Uri, storage: FirebaseStorage,
-                        onSuccess: (String) -> Unit,
-                        onFailure: (Exception) -> Unit) {
+        fun uploadImage(
+            imageUri: Uri, storage: FirebaseStorage,
+            onSuccess: (String) -> Unit,
+            onFailure: (Exception) -> Unit
+        ) {
             val userName = MealApp.prefs1?.isname
             val filename = "${userName}.jpg"
             val storageRef = storage.reference.child("images/$filename")
@@ -170,6 +188,18 @@ class Constant {
                 }
         }
 
+        fun Activity.saveUserToFirestore(user: User, onSuccess: (String) -> Unit) {
+            Firebase.firestore.collection("users")
+                .add(user)
+                .addOnSuccessListener { documentReference ->
+                    val userDoc = documentReference.path
+                    onSuccess(userDoc)
+                    Log.d("TAG", "User document added with ID: ${userDoc}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("TAG", "Error adding user document", e)
+                }
+        }
 
     }
 }

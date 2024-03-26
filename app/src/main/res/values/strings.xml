@@ -37,7 +37,7 @@
     <string name="increment_button_description">Add</string>
     <string name="meal_type">Meal Type</string>
     <string name="select_meal_type">Select Meal Type :</string>
-    <string name="filter">filter</string>
+    <string name="filter">Filter</string>
     <string name="enter_ingredients_comma_separated">Enter ingredients (comma-separated)</string>
     <string name="vegan">Vegan</string>
     <string name="filter_by_dietary_tags">Filter by Dietary Tags</string>
@@ -51,4 +51,9 @@
     <string name="welcome_to_mealshare">Welcome to MealShare</string>
     <string name="no_meals_yet">No Meals yet</string>
     <string name="meals">Meals</string>
+    <string name="no_fav_yet">No data found in favorite!!</string>
+    <string name="view_type_details">Details View</string>
+    <string name="view_type_grid">Grid View</string>
+    <string name="view_type">View Type</string>
+    <string name="view_type_tile">Tile View</string>
 </resources>

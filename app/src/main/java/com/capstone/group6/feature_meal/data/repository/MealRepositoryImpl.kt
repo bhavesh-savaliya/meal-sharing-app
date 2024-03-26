@@ -23,6 +23,9 @@ class MealRepositoryImpl(private val mealDao: MealDao) : MealRepository {
     override fun getMeals(isLocal: Boolean): Flow<List<Meal>> {
         return mealDao.getMeals(isLocal)
     }
+    override fun getFav(isLike: Boolean): Flow<List<Meal>> {
+        return mealDao.getFav(isLike)
+    }
 
     override suspend fun getMealById(id: String): Meal? {
         return mealDao.getMealById(id)
@@ -34,6 +37,10 @@ class MealRepositoryImpl(private val mealDao: MealDao) : MealRepository {
 
     override suspend fun delete(meal: Meal) {
         return mealDao.delete(meal)
+    }
+
+    override suspend fun update(meal: Meal) {
+       return mealDao.update(meal)
     }
 
     override suspend fun insertUser(user: User) {

@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.capstone.group6.Constant.Companion.saveUserToFirestore
 import com.capstone.group6.Constant.Companion.showBottomSheetDialog
 import com.capstone.group6.Constant.Companion.showDietaryTagsDialog
 import com.capstone.group6.Constant.Companion.uploadImage
@@ -31,6 +32,8 @@ import com.capstone.group6.ui.adapters.IngredientsAdapter
 import com.capstone.group6.ui.interfaces.AdapterOnClick
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -139,7 +142,6 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.BLACK)
                 (parent.getChildAt(0) as TextView)
                 val selectedMealType = mealTypes[position]
-                // Handle the selected meal type
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -228,8 +230,9 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         }
         meal.description = binding.etDescription.text.toString()
         val selectedCuisine = binding.spinnerCuisineType.selectedItem as CuisineType
-
+        val mealType = binding.spinnerMealType.selectedItem as String
         meal.cuisineType = selectedCuisine
+        meal.type = mealType
 
         val dietary: DietaryTag = when (dietaryTag) {
             "Vegan" -> DietaryTag.Vegan
@@ -243,13 +246,15 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         meal.count = binding.tvQuantity.text.toString()
 
 
-        meal.Type = mealTypes[selectedMeal]
+        meal.type = mealTypes[selectedMeal]
         val id: String = "" + System.currentTimeMillis()
         var name = MealApp.prefs1?.isname
-        val user = User(name = name, userId = id)
-        meal.user = user
+        val user = User(name = name)
+        meal.userData = user
+
         meal.image = uploadedUri
-        val savedIngredients = MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf())
+        val savedIngredients =
+            MealApp.prefs1?.getStringArray("selectedIngredients", arrayListOf())
         val selectedIngredients = savedIngredients
         meal.ingredients = selectedIngredients
         val randomNumber = kotlin.random.Random.nextInt(1, 101)
@@ -260,17 +265,14 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
 
         lifecycleScope.launch {
             mealsViewModel.mealRepository.insertMeal(meal)
+            Log.d("Saved", "save: ${meal}")
             finish()
         }
+
     }
 
-
     override fun onClick(item: ArrayList<String>, position: Int) {
-//        MealApp.prefs1!!.saveStringArray("selectedIngredients",item)
-//        MealApp.prefs1!!.positionTone = position
         Log.d("onClick", "onClick: ${item}")
-
-
     }
 
     override fun onClickIng(item: String, bottomSheetDialog: BottomSheetDialog, position: Int) {
