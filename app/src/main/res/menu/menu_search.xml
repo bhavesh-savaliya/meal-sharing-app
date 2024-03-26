@@ -13,7 +13,29 @@
         android:id="@+id/filter"
         android:icon="@drawable/ic_filter"
         android:title="@string/filter"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/viewTypeMenu"
+        android:icon="@drawable/eye"
+        android:title="@string/view_type"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/viewTypeGrid"
+                android:icon="@drawable/grid"
+                android:title="@string/view_type_grid" />
+
+            <item
+                android:id="@+id/viewTypeDetails"
+                android:icon="@drawable/details"
+                android:title="@string/view_type_details" />
+            <item
+                android:id="@+id/viewTypeTile"
+                android:icon="@drawable/list"
+                android:title="@string/view_type_tile" />
+        </menu>
+    </item>
 
     <item
         android:id="@+id/add"
