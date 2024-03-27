@@ -6,9 +6,6 @@
  */
 package com.capstone.group6.ui.adapters
 
-import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
@@ -17,24 +14,35 @@ import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.capstone.group6.Constant.Companion.VIEW_TYPE_DETAILS
+import com.capstone.group6.Constant.Companion.VIEW_TYPE_GRID
+import com.capstone.group6.Constant.Companion.VIEW_TYPE_LIST
 import com.capstone.group6.Constant.Companion.startActivity
 import com.capstone.group6.R
 import com.capstone.group6.databinding.ItemFeedBinding
+import com.capstone.group6.databinding.ItemFeedGridBinding
+import com.capstone.group6.databinding.ItemFeedTileBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.ui.FeedDetailsActivity
 import java.util.Random
 
 
+class FeedsAdapter(
+    private var feedList: ArrayList<Meal>,
+    var activity: FragmentActivity,
+    private val currentView: Int,
+    val fromUser: Boolean = false
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var currentViewType: Int = currentView
 
-class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: Activity) :
-    RecyclerView.Adapter<FeedsAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(binding: ItemFeedBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,48 +56,94 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
         val userImage = binding.ivUserImage
         val prefix = binding.tvPrefix
         val mealType = binding.tvMealType
+        val bookmark = binding.ivBookmark
+        val share = binding.ivShare
+    }
+
+    inner class ListViewHolder(binding: ItemFeedTileBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val tvTitle: TextView = binding.tvTitle
+        val ivImage = binding.ivFeedImage
+        val userName = binding.tvUserName
+        val bookmark = binding.ivBookmark
+        val share = binding.ivShare
+
+    }
+
+    inner class GridViewHolder(binding: ItemFeedGridBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val tvTitle: TextView = binding.tvTitle
+        val ivImage = binding.ivFeedImage
+        val userName = binding.tvUserName
+        val bookmark = binding.ivBookmark
+        val share = binding.ivShare
+
+
     }
 
     private val TAG = "FeedsAdapter"
 
-    private val differCallback = object : DiffUtil.ItemCallback<Meal>() {
 
-        override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            return oldItem.id == newItem.id
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-    val differ = AsyncListDiffer(this, differCallback)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder(
-            ItemFeedBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+        return when (viewType) {
+            VIEW_TYPE_LIST -> ListViewHolder(
+                ItemFeedTileBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
-        )
+
+            VIEW_TYPE_GRID -> GridViewHolder(
+                ItemFeedGridBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+
+            VIEW_TYPE_DETAILS -> ArticleViewHolder(
+                ItemFeedBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
     }
 
     override fun getItemCount(): Int {
         return feedList.size
     }
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
         val feed = feedList[position]
+
+        when (holder.itemViewType) {
+            VIEW_TYPE_LIST -> bindListView(holder as ListViewHolder, feed, position)
+            VIEW_TYPE_GRID -> bindGridView(holder as GridViewHolder, feed, position)
+            VIEW_TYPE_DETAILS -> bindDetailsView(holder as ArticleViewHolder, feed, position)
+        }
+
+    }
+
+    private fun bindGridView(holder: FeedsAdapter.GridViewHolder, feed: Meal, position: Int) {
         holder.itemView.apply {
             val uri: Uri? = if (feed.image.isNullOrEmpty()) null else Uri.parse(feed.image)
 
             Glide.with(this).load(uri).placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder).into(holder.ivImage)
+
+            if (fromUser) {
+                holder.share.visibility = View.VISIBLE
+            } else {
+                holder.share.visibility = View.GONE
+            }
             holder.tvTitle.text = feed.title
-            holder.tvDescription.text = feed.description
-            holder.cuisineType.text = "Cuisine Type: ${feed.cuisineType.name}"
-            holder.mealType.text ="Meal Type: ${feed.Type}"
             val fullText = "Dietary Tag: ${feed.dietarytags.name}"
             val spannable = SpannableString(fullText)
             val startIndex = fullText.indexOf(feed.dietarytags.name)
@@ -100,19 +154,126 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
                 endIndex,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            holder.mealType.text = "Meal Type: ${feed.Type}"
-            holder.dietaryTag.text = spannable
-            holder.totalLikes.text = "" + feed.likes
-            holder.userName.text = feed.user?.name ?: ""
-
-            feed.user?.name?.let { setUserDetails(holder.userImage, holder.prefix, it) }
+            holder.userName.text = feed.userData?.name ?: ""
+            isGridLike(feed, holder)
+            // feed.userData?.name?.let { setUserDetails(holder.userImage, holder.prefix, it) }
 
             setOnClickListener {
-                activity.startActivity(FeedDetailsActivity::class.java,position)
+                activity.startActivity(FeedDetailsActivity::class.java, position)
+
+            }
+            holder.bookmark.setOnClickListener {
+                isGridLike(feed, holder)
+                feed.let {
+                    feed.isLike = !feed.isLike
+                }
+
+            }
+
+            holder.share.setOnClickListener {
 
             }
         }
     }
+
+    private fun bindDetailsView(holder: ArticleViewHolder, feed: Meal, position: Int) {
+        holder.itemView.apply {
+            val uri: Uri? = if (feed.image.isNullOrEmpty()) null else Uri.parse(feed.image)
+
+            Glide.with(this).load(uri).placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder).into(holder.ivImage)
+
+            if (fromUser) {
+                holder.share.visibility = View.VISIBLE
+            } else {
+                holder.share.visibility = View.GONE
+            }
+            holder.tvTitle.text = feed.title
+            holder.tvDescription.text = feed.description
+            holder.cuisineType.text = "Cuisine Type: ${feed.cuisineType.name}"
+            holder.mealType.text = "Meal Type: ${feed.type}"
+            val fullText = "Dietary Tag: ${feed.dietarytags.name}"
+            val spannable = SpannableString(fullText)
+            val startIndex = fullText.indexOf(feed.dietarytags.name)
+            val endIndex = startIndex + feed.dietarytags.name.length
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                startIndex,
+                endIndex,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            holder.mealType.text = "Meal Type: ${feed.type}"
+            holder.dietaryTag.text = spannable
+            holder.totalLikes.text = "" + feed.likes
+            holder.userName.text = feed.userData?.name ?: ""
+            isLike(feed, holder)
+            feed.userData?.name?.let { setUserDetails(holder.userImage, holder.prefix, it) }
+
+            setOnClickListener {
+                activity.startActivity(FeedDetailsActivity::class.java, position)
+
+            }
+            holder.bookmark.setOnClickListener {
+                isLike(feed, holder)
+                feed.let {
+                    feed.isLike = !feed.isLike
+                }
+
+            }
+
+            holder.share.setOnClickListener {
+
+
+            }
+        }
+    }
+
+    private fun bindListView(holder: ListViewHolder, feed: Meal, position: Int) {
+        holder.itemView.apply {
+            val uri: Uri? = if (feed.image.isNullOrEmpty()) null else Uri.parse(feed.image)
+
+            Glide.with(this).load(uri).placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder).into(holder.ivImage)
+
+            if (fromUser) {
+                holder.share.visibility = View.VISIBLE
+            } else {
+                holder.share.visibility = View.GONE
+            }
+            holder.tvTitle.text = feed.title
+            val fullText = "Dietary Tag: ${feed.dietarytags.name}"
+            val spannable = SpannableString(fullText)
+            val startIndex = fullText.indexOf(feed.dietarytags.name)
+            val endIndex = startIndex + feed.dietarytags.name.length
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                startIndex,
+                endIndex,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            holder.userName.text = feed.userData?.name ?: ""
+            isListLike(feed, holder)
+            //feed.userData?.name?.let { setUserDetails(holder.userImage, holder.prefix, it) }
+
+            setOnClickListener {
+                activity.startActivity(FeedDetailsActivity::class.java, position)
+
+            }
+            holder.bookmark.setOnClickListener {
+                isListLike(feed, holder)
+                feed.let {
+                    feed.isLike = !feed.isLike
+                }
+
+            }
+
+            holder.share.setOnClickListener {
+
+            }
+        }
+
+    }
+
 
     fun setFilterList(newList: ArrayList<Meal>) {
         feedList = newList
@@ -137,5 +298,37 @@ class FeedsAdapter(private var feedList: ArrayList<Meal>, public var activity: A
         Log.d(TAG, "setUserDetails: $prefix$randomColor")
     }
 
+    fun isLike(feed: Meal, holder: ArticleViewHolder) {
+        if (feed.isLike) {
+            holder.bookmark.setImageResource(R.drawable.ic_boomark_select)
+        } else {
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_unselect)
+        }
+    }
+
+    fun isListLike(feed: Meal, holder: ListViewHolder) {
+        if (feed.isLike) {
+            holder.bookmark.setImageResource(R.drawable.ic_boomark_select)
+        } else {
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_unselect)
+        }
+    }
+
+    fun isGridLike(feed: Meal, holder: GridViewHolder) {
+        if (feed.isLike) {
+            holder.bookmark.setImageResource(R.drawable.ic_boomark_select)
+        } else {
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_unselect)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return currentViewType
+    }
+
+    fun updateViewType(newViewType: Int) {
+        currentViewType = newViewType
+        notifyDataSetChanged()
+    }
 
 }

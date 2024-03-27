@@ -23,6 +23,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.group6.Constant.Companion.VIEW_TYPE_DETAILS
 import com.capstone.group6.Constant.Companion.startActivity
 import com.capstone.group6.R
 import com.capstone.group6.databinding.FilterLayoutBinding
@@ -131,7 +132,7 @@ class FeedFragment : Fragment() {
 
 
     private fun setUpRecyclerView() {
-        feedsAdapter = FeedsAdapter(mealMutableList, activity!!)
+        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS)
         binding.rvFeeds.apply {
             adapter = feedsAdapter
             layoutManager = LinearLayoutManager(activity)
