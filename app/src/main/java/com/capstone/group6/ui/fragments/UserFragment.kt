@@ -36,7 +36,7 @@ class UserFragment : Fragment(), BookmarkClickEvent {
     }
 
     private fun setUpRecyclerView() {
-        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS, true)
+        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS,this, true )
         binding.rvFeeds.apply {
             adapter = feedsAdapter
             layoutManager = LinearLayoutManager(activity)

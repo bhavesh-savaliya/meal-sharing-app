@@ -32,6 +32,7 @@ import com.capstone.group6.databinding.ItemFeedGridBinding
 import com.capstone.group6.databinding.ItemFeedTileBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.ui.FeedDetailsActivity
+import com.capstone.group6.ui.interfaces.BookmarkClickEvent
 import java.util.Random
 
 
@@ -39,10 +40,11 @@ class FeedsAdapter(
     private var feedList: ArrayList<Meal>,
     var activity: FragmentActivity,
     private val currentView: Int,
+    private val bookmarkClickEvent: BookmarkClickEvent,
     val fromUser: Boolean = false
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var currentViewType: Int = currentView
-
 
     inner class ArticleViewHolder(binding: ItemFeedBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -89,25 +91,19 @@ class FeedsAdapter(
         return when (viewType) {
             VIEW_TYPE_LIST -> ListViewHolder(
                 ItemFeedTileBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
 
             VIEW_TYPE_GRID -> GridViewHolder(
                 ItemFeedGridBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
 
             VIEW_TYPE_DETAILS -> ArticleViewHolder(
                 ItemFeedBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
 
@@ -149,10 +145,7 @@ class FeedsAdapter(
             val startIndex = fullText.indexOf(feed.dietarytags.name)
             val endIndex = startIndex + feed.dietarytags.name.length
             spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                startIndex,
-                endIndex,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             holder.userName.text = feed.userData?.name ?: ""
             isGridLike(feed, holder)
@@ -166,7 +159,9 @@ class FeedsAdapter(
                 isGridLike(feed, holder)
                 feed.let {
                     feed.isLike = !feed.isLike
+
                 }
+                bookmarkClickEvent.onBookMarkSaved(position, feed)
 
             }
 
@@ -197,10 +192,7 @@ class FeedsAdapter(
             val startIndex = fullText.indexOf(feed.dietarytags.name)
             val endIndex = startIndex + feed.dietarytags.name.length
             spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                startIndex,
-                endIndex,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             holder.mealType.text = "Meal Type: ${feed.type}"
             holder.dietaryTag.text = spannable
@@ -218,6 +210,7 @@ class FeedsAdapter(
                 feed.let {
                     feed.isLike = !feed.isLike
                 }
+                bookmarkClickEvent.onBookMarkSaved(position, feed)
 
             }
 
@@ -246,10 +239,7 @@ class FeedsAdapter(
             val startIndex = fullText.indexOf(feed.dietarytags.name)
             val endIndex = startIndex + feed.dietarytags.name.length
             spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                startIndex,
-                endIndex,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             holder.userName.text = feed.userData?.name ?: ""
             isListLike(feed, holder)
@@ -264,6 +254,7 @@ class FeedsAdapter(
                 feed.let {
                     feed.isLike = !feed.isLike
                 }
+                bookmarkClickEvent.onBookMarkSaved(position, feed)
 
             }
 
@@ -314,7 +305,7 @@ class FeedsAdapter(
         }
     }
 
-    fun isGridLike(feed: Meal, holder: GridViewHolder) {
+    private fun isGridLike(feed: Meal, holder: GridViewHolder) {
         if (feed.isLike) {
             holder.bookmark.setImageResource(R.drawable.ic_boomark_select)
         } else {

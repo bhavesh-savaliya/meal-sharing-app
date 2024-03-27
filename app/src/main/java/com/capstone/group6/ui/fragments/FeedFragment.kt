@@ -30,12 +30,14 @@ import com.capstone.group6.databinding.FilterLayoutBinding
 import com.capstone.group6.databinding.FragmentFeedBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
+import com.capstone.group6.ui.MainActivity
 import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.FeedsAdapter
+import com.capstone.group6.ui.interfaces.BookmarkClickEvent
 import kotlinx.coroutines.launch
 
 
-class FeedFragment : Fragment() {
+class FeedFragment : Fragment(), BookmarkClickEvent {
 
     private val TAG: String? = "FeedFragment"
     private val mealsViewModel: MealsViewModel by activityViewModels()
@@ -132,7 +134,7 @@ class FeedFragment : Fragment() {
 
 
     private fun setUpRecyclerView() {
-        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS)
+        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS, this)
         binding.rvFeeds.apply {
             adapter = feedsAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -227,6 +229,14 @@ class FeedFragment : Fragment() {
                 feedsAdapter.setFilterList(mealMutableList)
             }
         }
+
+    }
+
+    override fun onBookMarkSaved(position: Int, feed: Meal) {
+        (activity as MainActivity).update(feed);
+    }
+
+    override fun feedShare(feed: Meal) {
 
     }
 

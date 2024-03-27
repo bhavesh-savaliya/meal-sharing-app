@@ -47,7 +47,7 @@ class FavFragment : Fragment(), BookmarkClickEvent {
 
 
     private fun setUpRecyclerView() {
-        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, Constant.VIEW_TYPE_DETAILS)
+        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, Constant.VIEW_TYPE_DETAILS, this)
         binding.rvFeeds.apply {
             adapter = feedsAdapter
             layoutManager = LinearLayoutManager(activity)
