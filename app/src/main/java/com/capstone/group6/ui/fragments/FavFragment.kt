@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.group6.Constant
 import com.capstone.group6.R
 import com.capstone.group6.databinding.FragmentFavBinding
-import com.capstone.group6.databinding.FragmentFeedBinding
-import com.capstone.group6.databinding.FragmentUserBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
 import com.capstone.group6.ui.MainActivity
@@ -23,7 +21,7 @@ import com.capstone.group6.ui.interfaces.BookmarkClickEvent
 import kotlinx.coroutines.launch
 
 
-class FavFragment : Fragment(), BookmarkClickEvent {
+class FavFragment : Fragment(),BookmarkClickEvent {
     private val TAG: String? = "FavFragment"
     private lateinit var binding: FragmentFavBinding
     private val mealsViewModel: MealsViewModel by activityViewModels()
@@ -55,7 +53,6 @@ class FavFragment : Fragment(), BookmarkClickEvent {
     }
 
     private fun readFirebaseData() {
-
         mealsViewModel.readFireStoreData()
         lifecycleScope.launch {
             mealsViewModel.fetchFavMeals(true).collect { meals ->
@@ -69,11 +66,11 @@ class FavFragment : Fragment(), BookmarkClickEvent {
     }
 
     override fun onBookMarkSaved(position: Int, feed: Meal) {
-        (activity as MainActivity).update(feed)
-
+        (activity as MainActivity).update(feed);
     }
 
     override fun feedShare(feed: Meal) {
-
     }
+
+
 }

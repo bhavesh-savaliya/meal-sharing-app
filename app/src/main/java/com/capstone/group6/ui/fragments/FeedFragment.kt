@@ -22,8 +22,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.group6.Constant.Companion.VIEW_TYPE_DETAILS
+import com.capstone.group6.Constant.Companion.VIEW_TYPE_GRID
+import com.capstone.group6.Constant.Companion.VIEW_TYPE_LIST
 import com.capstone.group6.Constant.Companion.startActivity
 import com.capstone.group6.R
 import com.capstone.group6.databinding.FilterLayoutBinding
@@ -54,7 +57,7 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         binding = FragmentFeedBinding.inflate(inflater)
         setUpRecyclerView()
         readFirebaseData()
@@ -93,6 +96,22 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
                 }
                 if (id == R.id.add) {
                     activity?.startActivity(MealPlannerActivity::class.java)
+                }
+                if (id == R.id.viewTypeGrid) {
+                    updateGridSpanCount(2)
+                    feedsAdapter.updateViewType(VIEW_TYPE_GRID)
+
+                }
+                if (id == R.id.viewTypeDetails) {
+                    updateGridSpanCount(1)
+                    feedsAdapter.updateViewType(VIEW_TYPE_DETAILS)
+
+                }
+
+                if (id == R.id.viewTypeTile) {
+                    updateGridSpanCount(1)
+                    feedsAdapter.updateViewType(VIEW_TYPE_LIST)
+
                 }
 
                 return true
@@ -137,12 +156,19 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
         feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS, this)
         binding.rvFeeds.apply {
             adapter = feedsAdapter
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = GridLayoutManager(activity, 1)
+        }
+    }
+
+    private fun updateGridSpanCount(spanCount: Int) {
+        val layoutManager = binding.rvFeeds.layoutManager
+        if (layoutManager is GridLayoutManager) {
+            layoutManager.spanCount = spanCount
+            feedsAdapter.notifyDataSetChanged()
         }
     }
 
     private fun readFirebaseData() {
-
         mealsViewModel.readFireStoreData()
         lifecycleScope.launch {
             mealsViewModel.fetchMeals(false).collect { meals ->
@@ -193,7 +219,10 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
         dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         filterLayoutBinding.buttonApplyFilter.setOnClickListener {
             val selectedMealType = filterLayoutBinding.spinnerMealType.selectedItem as String
-            filterLayoutBinding.spinnerMealType.background.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+            filterLayoutBinding.spinnerMealType.background.setColorFilter(
+                getResources().getColor(R.color.black),
+                PorterDuff.Mode.SRC_ATOP
+            );
             applyFilter(filterLayoutBinding)
             dialog.dismiss()
         }

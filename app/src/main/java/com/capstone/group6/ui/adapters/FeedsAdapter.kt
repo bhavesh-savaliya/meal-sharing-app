@@ -215,7 +215,7 @@ class FeedsAdapter(
             }
 
             holder.share.setOnClickListener {
-
+               bookmarkClickEvent.feedShare(feed)
 
             }
         }
