@@ -18,6 +18,6 @@
         android:textSize="@dimen/_16sdp"
         android:fontFamily="@font/medium"
         android:text="@string/app_name"
-        android:textColor="@color/black"/>
+        android:textColor="@color/textColor"/>
 
 </RelativeLayout>

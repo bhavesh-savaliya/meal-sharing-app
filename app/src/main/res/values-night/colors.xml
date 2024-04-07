@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textColor">#FFFFFFFF</color>
     <color name="deep_orange_500">#FF5722</color>
     <color name="colorAccent">#494E97</color>
     <color name="grey">#656464</color>
@@ -10,7 +11,7 @@
     <color name="bottom_nav_selected_item">#7E83F3</color>
     <color name="fragment_bg_color">#F4F4FD</color>
     <color name="lightgrey">#8F8F8F</color>
-    <color name="textColor">#FF000000</color>
+
     <array name="androidcolors">
         <item>#9E68D1F8</item>
         <item>#EEB7B7</item>

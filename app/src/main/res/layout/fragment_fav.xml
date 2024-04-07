@@ -14,7 +14,7 @@
         android:textSize="@dimen/_14sdp"
         android:fontFamily="@font/bold"
         android:text="@string/no_fav_yet"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:padding="@dimen/_5sdp"
         android:visibility="gone"
         android:layout_centerHorizontal="true"

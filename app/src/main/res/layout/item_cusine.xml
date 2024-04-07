@@ -21,7 +21,7 @@
         android:layout_marginLeft="@dimen/_5sdp"
         android:layout_toRightOf="@id/ivCountry"
         android:layout_centerVertical="true"
-        android:textColor="@color/lightgrey"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         tools:text="United Kingdom"/>
 

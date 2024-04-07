@@ -26,6 +26,7 @@ import com.capstone.group6.Constant.Companion.VIEW_TYPE_DETAILS
 import com.capstone.group6.Constant.Companion.VIEW_TYPE_GRID
 import com.capstone.group6.Constant.Companion.VIEW_TYPE_LIST
 import com.capstone.group6.Constant.Companion.startActivity
+import com.capstone.group6.MealApp
 import com.capstone.group6.R
 import com.capstone.group6.databinding.ItemFeedBinding
 import com.capstone.group6.databinding.ItemFeedGridBinding
@@ -318,7 +319,7 @@ class FeedsAdapter(
     }
 
     fun updateViewType(newViewType: Int) {
-        currentViewType = newViewType
+        currentViewType = MealApp.prefs1?.span!!
         notifyDataSetChanged()
     }
 

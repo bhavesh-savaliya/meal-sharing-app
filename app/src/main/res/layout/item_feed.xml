@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:text="Username"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:fontFamily="@font/medium"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="@id/ivUserImage"
@@ -76,7 +76,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:text="Title"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
@@ -89,7 +89,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="Description"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
@@ -101,7 +101,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="Meal Type"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
@@ -113,7 +113,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="Cuisine Type"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
@@ -126,7 +126,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="Dietary Type"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@id/ivFeedImage"
             app:layout_constraintStart_toStartOf="@id/ivFeedImage"
@@ -165,7 +165,8 @@
             android:src="@drawable/ic_bookmark_unselect"
             android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@+id/ivLikeImage"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/textColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

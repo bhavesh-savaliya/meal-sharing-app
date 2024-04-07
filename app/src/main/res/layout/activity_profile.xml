@@ -32,6 +32,7 @@
         android:gravity="center"
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
+        android:textColor="@color/textColor"
         android:text="@string/welcome_to_mealshare"
         android:textSize="@dimen/_26sdp" />
 
@@ -43,6 +44,7 @@
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:text="Enter Your Name"
+        android:textColor="@color/textColor"
         android:textSize="@dimen/_12sdp" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -54,7 +56,7 @@
         android:fontFamily="@font/regular"
         android:hint="Type your Name here"
         android:inputType="text"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:padding="@dimen/_8sdp"
         android:textSize="@dimen/_12sdp" />
     </LinearLayout>

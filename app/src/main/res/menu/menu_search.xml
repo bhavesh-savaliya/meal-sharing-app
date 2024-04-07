@@ -8,7 +8,11 @@
         android:title="@string/search_menu"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
-
+    <item
+        android:id="@+id/theme"
+        android:icon="@drawable/ic_dark"
+        android:title="@string/appTheme"
+        app:showAsAction="always" />
     <item
         android:id="@+id/filter"
         android:icon="@drawable/ic_filter"
@@ -18,7 +22,7 @@
         android:id="@+id/viewTypeMenu"
         android:icon="@drawable/eye"
         android:title="@string/view_type"
-        app:showAsAction="ifRoom">
+        app:showAsAction="collapseActionView">
 
         <menu>
             <item
@@ -40,8 +44,8 @@
     <item
         android:id="@+id/add"
         android:icon="@drawable/ic_new_add"
-        android:title="@string/filter"
-        app:showAsAction="always" />
+        android:title="@string/add"
+        app:showAsAction="collapseActionView" />
 
 
 </menu>

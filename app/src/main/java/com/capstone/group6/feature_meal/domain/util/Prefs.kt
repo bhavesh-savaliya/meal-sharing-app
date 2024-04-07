@@ -50,8 +50,8 @@ class Prefs (context: Context)
         get() = preferences.getString("theme", "light")
         set(value) = preferences.edit().putString("theme", value!!).apply()
 
-    var size: Int?
-        get() = preferences.getInt("size", 50)
+    var span: Int?
+        get() = preferences.getInt("size", 1)
         set(value) = preferences.edit().putInt("size", value!!).apply()
 
     var ingredient: String?

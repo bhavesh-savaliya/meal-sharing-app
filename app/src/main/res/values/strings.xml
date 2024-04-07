@@ -56,4 +56,10 @@
     <string name="view_type_grid">Grid View</string>
     <string name="view_type">View Type</string>
     <string name="view_type_tile">Tile View</string>
+
+    <string name="appLanguage">App Language</string>
+    <string name="appTheme">App Theme</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="add">Add</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.capstone.group6.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -284,5 +286,13 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         binding.etIngredients.text = textToShow.lowercase()
 
         IngredientsAdapter.selectedIngredients.clear()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(newBase)
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
     }
 }

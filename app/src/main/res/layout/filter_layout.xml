@@ -15,7 +15,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="@string/filter_by_meal_type"
             android:textStyle="bold" />
 
@@ -40,7 +39,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:hint="@string/enter_ingredients_comma_separated"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:windowSoftInputMode="stateVisible" />
 
         <TextView
@@ -91,7 +90,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#E1DFDF"
                 android:text="@string/reset"
-                android:textColor="@color/black"
+                android:textColor="@color/textColor"
                 app:background="@drawable/bg_round_corner" />
 
             <Button
@@ -114,5 +113,5 @@
         android:layout_alignParentEnd="true"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/ic_close"
-        android:tint="@color/black" />
+        android:tint="@color/textColor" />
 </RelativeLayout>

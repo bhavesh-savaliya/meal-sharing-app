@@ -43,6 +43,7 @@
             android:paddingEnd="@dimen/_5sdp"
             android:paddingBottom="@dimen/_8sdp"
             android:text="Surpricee"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_9sdp" />
 
     </LinearLayout>

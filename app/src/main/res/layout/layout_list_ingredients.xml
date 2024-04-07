@@ -5,19 +5,21 @@
     android:orientation="vertical"
     android:layout_marginBottom="@dimen/_10sdp"
     >
+
     <TextView
-        android:layout_toStartOf="@+id/close"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:id="@+id/textLength"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="14dp"
+        android:layout_toStartOf="@+id/close"
         android:fontFamily="@font/bold"
-        android:textColor="@color/black"
         android:paddingStart="@dimen/_5sdp"
         android:text="@string/select_ingredients"
+        android:textColor="@color/textColor"
         android:textSize="@dimen/_18sdp" />
+
     <ImageView
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -38,7 +40,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/_10sdp"
         android:fontFamily="@font/medium"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:paddingStart="@dimen/_5sdp"
         android:visibility="gone"
         android:textSize="@dimen/_14sdp" />

@@ -1,5 +1,7 @@
 package com.capstone.group6.ui
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -38,5 +40,12 @@ class SplashScreenActivity : AppCompatActivity() {
         }, SPLASH_DURATION)
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(newBase)
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+    }
 
 }

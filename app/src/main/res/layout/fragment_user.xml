@@ -12,7 +12,7 @@
         android:textSize="@dimen/_14sdp"
         android:fontFamily="@font/bold"
         android:text="@string/meals"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:padding="@dimen/_5sdp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="@dimen/_10sdp"
@@ -32,7 +32,7 @@
         android:textSize="@dimen/_14sdp"
         android:fontFamily="@font/regular"
         android:text="@string/no_meals_yet"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:padding="@dimen/_5sdp"/>
 
 </RelativeLayout>

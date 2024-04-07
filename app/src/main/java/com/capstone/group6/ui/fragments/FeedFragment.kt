@@ -13,9 +13,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -28,6 +30,7 @@ import com.capstone.group6.Constant.Companion.VIEW_TYPE_DETAILS
 import com.capstone.group6.Constant.Companion.VIEW_TYPE_GRID
 import com.capstone.group6.Constant.Companion.VIEW_TYPE_LIST
 import com.capstone.group6.Constant.Companion.startActivity
+import com.capstone.group6.MealApp
 import com.capstone.group6.R
 import com.capstone.group6.databinding.FilterLayoutBinding
 import com.capstone.group6.databinding.FragmentFeedBinding
@@ -37,6 +40,7 @@ import com.capstone.group6.ui.MainActivity
 import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.FeedsAdapter
 import com.capstone.group6.ui.interfaces.BookmarkClickEvent
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
 
 
@@ -91,6 +95,10 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 val id: Int = menuItem.itemId
+
+                if (id == R.id.theme) {
+                   themeDialog()
+                }
                 if (id == R.id.filter) {
                     filterSet()
                 }
@@ -99,18 +107,23 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
                 }
                 if (id == R.id.viewTypeGrid) {
                     updateGridSpanCount(2)
+                    MealApp.prefs1?.span =1
                     feedsAdapter.updateViewType(VIEW_TYPE_GRID)
+
 
                 }
                 if (id == R.id.viewTypeDetails) {
                     updateGridSpanCount(1)
+                    MealApp.prefs1?.span =2
                     feedsAdapter.updateViewType(VIEW_TYPE_DETAILS)
 
                 }
 
                 if (id == R.id.viewTypeTile) {
                     updateGridSpanCount(1)
+                    MealApp.prefs1?.span =0
                     feedsAdapter.updateViewType(VIEW_TYPE_LIST)
+
 
                 }
 
@@ -153,7 +166,7 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
 
 
     private fun setUpRecyclerView() {
-        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, VIEW_TYPE_DETAILS, this)
+        feedsAdapter = FeedsAdapter(mealMutableList, activity!!, MealApp.prefs1?.span!!, this)
         binding.rvFeeds.apply {
             adapter = feedsAdapter
             layoutManager = GridLayoutManager(activity, 1)
@@ -267,6 +280,57 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
 
     override fun feedShare(feed: Meal) {
 
+    }
+
+    private fun themeDialog() {
+        val bottomSheetDialog = BottomSheetDialog(context!!)
+        bottomSheetDialog.setContentView(R.layout.list_theme)
+
+        var dark = bottomSheetDialog.findViewById<RadioButton>(R.id.dark)!!
+        var light = bottomSheetDialog.findViewById<RadioButton>(R.id.light)!!
+
+        if (MealApp.prefs1!!.theme.equals("dark")) {
+            dark.isChecked = true
+        } else {
+            light.isChecked = true
+        }
+
+        dark.setOnCheckedChangeListener { p0, p1 ->
+            if (p1) {
+                bottomSheetDialog.dismiss()
+                MealApp.prefs1!!.theme = "dark"
+                changeTheme()
+            }
+        }
+
+        light.setOnCheckedChangeListener { p0, p1 ->
+            if (p1) {
+                bottomSheetDialog.dismiss()
+                MealApp.prefs1!!.theme = "light"
+                changeTheme()
+            }
+        }
+
+
+        if (!activity!!.isFinishing)
+            bottomSheetDialog.show()
+    }
+
+    fun changeTheme() {
+        // Switch to the opposite theme mode
+        val newNightMode =
+            if (MealApp.prefs1!!.theme.equals("dark")) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
+        if (currentNightMode != newNightMode) {
+
+            // Set the new theme mode
+            AppCompatDelegate.setDefaultNightMode(newNightMode)
+
+        }
     }
 
 

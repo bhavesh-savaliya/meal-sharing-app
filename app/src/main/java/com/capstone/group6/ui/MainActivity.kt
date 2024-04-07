@@ -1,5 +1,7 @@
 package com.capstone.group6.ui
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -44,7 +46,13 @@ class MainActivity : AppCompatActivity() {
         mealsViewModel.writeData(this,feed)
 
     }
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(newBase)
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
 
+    }
 
 }
 
