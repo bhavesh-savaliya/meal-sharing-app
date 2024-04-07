@@ -1,4 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MealShare</string>
+    <string name="app_name">مشاركة الوجبات</string>
+    <string name="search_menu">التغذية</string>
+    <string name="search_here">ابحث هنا...</string>
+    <string name="search_feeds_here">ابحث عن التغذية هنا...</string>
+    <string name="title_activity_splash_screen">نشاط شاشة البداية</string>
+    <string name="first_fragment_label">الشاشة الأولى</string>
+    <string name="second_fragment_label">الشاشة الثانية</string>
+    <string name="next">التالي</string>
+    <string name="previous">السابق</string>
+
+    <string name="meal_plan">خطة الوجبات</string>
+    <string name="favourites">المفضلة</string>
+    <string name="feed">تغذية</string>
+    <string name="recipe_title">عنوان الوصفة</string>
+    <string name="upload_image">تحميل الصورة</string>
+    <string name="add_description">إضافة الوصف:</string>
+    <string name="description">الوصف</string>
+    <string name="select_cuisine">اختر المطبخ</string>
+    <string name="select_cuisine_type">اختر نوع المطبخ:</string>
+    <string name="ingredients">المكونات</string>
+    <string name="dietary_tags">العلامات الغذائية</string>
+    <string name="quantity">إضافة الكمية</string>
+    <string name="save_recipe">حفظ الوصفة</string>
+    <string name="create_meal">إنشاء وجبة</string>
+    <string name="type_your_recipe_name_here">اكتب اسم الوصفة هنا</string>
+    <string name="add_image_here">إضافة الصورة هنا:</string>
+    <string name="add_cover_image">إضافة صورة الغلاف</string>
+    <string name="add_descriptiction_here">أضف الوصف هنا</string>
+    <string name="privateString">خاص</string>
+    <string name="publicString">عام</string>
+    <string name="select_ingredients">اختر المكونات</string>
+    <string name="type">نوع الوجبة</string>
+    <string name="decrement_button_description">إزالة</string>
+    <string name="increment_button_description">إضافة</string>
+    <string name="meal_type">نوع الوجبة</string>
+    <string name="select_meal_type">اختر نوع الوجبة:</string>
+    <string name="filter">تصفية</string>
+    <string name="enter_ingredients_comma_separated">أدخل المكونات (مفصولة بفواصل)</string>
+    <string name="vegan">نباتي</string>
+    <string name="filter_by_dietary_tags">تصفية حسب العلامات الغذائية</string>
+    <string name="vegetarian">نباتي</string>
+    <string name="gluten_free">خالي من الجلوتين</string>
+    <string name="dairy_free">خالي من الألبان</string>
+    <string name="reset">إعادة تعيين</string>
+    <string name="apply_filter">تطبيق التصفية</string>
+    <string name="filter_by_meal_type">تصفية حسب نوع الوجبة</string>
+    <string name="enter_your_name">أدخل اسمك</string>
+    <string name="welcome_to_mealshare">مرحبًا بك في مشاركة الوجبات</string>
+    <string name="no_meals_yet">لا توجد وجبات بعد</string>
+    <string name="meals">الوجبات</string>
+    <string name="no_fav_yet">لم يتم العثور على بيانات في المفضلة!!</string>
+    <string name="view_type_details">عرض التفاصيل</string>
+    <string name="view_type_grid">عرض الشبكة</string>
+    <string name="view_type">نوع العرض</string>
+    <string name="view_type_tile">عرض البلاط</string>
+
+    <string name="appLanguage">لغة التطبيق</string>
+    <string name="appTheme">ثيم التطبيق</string>
+    <string name="dark">داكن</string>
+    <string name="light">فاتح</string>
+    <string name="add">إضافة</string>
 </resources>
