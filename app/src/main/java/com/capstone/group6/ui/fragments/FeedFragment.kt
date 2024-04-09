@@ -1,5 +1,6 @@
 package com.capstone.group6.ui.fragments
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -36,6 +37,7 @@ import com.capstone.group6.databinding.FilterLayoutBinding
 import com.capstone.group6.databinding.FragmentFeedBinding
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
+import com.capstone.group6.ui.LanguageActivity
 import com.capstone.group6.ui.MainActivity
 import com.capstone.group6.ui.MealPlannerActivity
 import com.capstone.group6.ui.adapters.FeedsAdapter
@@ -109,8 +111,6 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
                     updateGridSpanCount(2)
                     MealApp.prefs1?.span =1
                     feedsAdapter.updateViewType(VIEW_TYPE_GRID)
-
-
                 }
                 if (id == R.id.viewTypeDetails) {
                     updateGridSpanCount(1)
@@ -125,6 +125,11 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
                     feedsAdapter.updateViewType(VIEW_TYPE_LIST)
 
 
+                }
+
+                if (id == R.id.language){
+                    val intent =Intent(activity,LanguageActivity::class.java)
+                    startActivity(intent)
                 }
 
                 return true

@@ -3,6 +3,7 @@ package com.capstone.group6.ui
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -10,9 +11,11 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.capstone.group6.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.group6.Constant
+import com.capstone.group6.MealApp
 import com.capstone.group6.feature_meal.domain.model.Meal
 import com.capstone.group6.feature_meal.domain.repository.MealRepository
 import com.capstone.group6.feature_meal.presentation.MealsViewModel
+import com.capstone.group6.feature_meal.presentation.util.LanguageContextWrapper
 
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -46,14 +49,17 @@ class MainActivity : AppCompatActivity() {
         mealsViewModel.writeData(this,feed)
 
     }
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(newBase)
-    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
     }
+    override fun attachBaseContext(newBase: Context) {
 
+        val selectedLanguage = MealApp.instance.prefs.languageCode
+        Log.d("TAG", "attachBaseContext: ${selectedLanguage}")
+        super.attachBaseContext(LanguageContextWrapper.wrap(newBase, selectedLanguage!!))
+    }
 }
 
 

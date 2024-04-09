@@ -23,7 +23,7 @@
         app:theme="@style/Theme.Tiffinserviceapp"
         android:layout_gravity="center"
         android:gravity="center"
-
+        app:popupTheme="@style/PopupMenuStyle"
         android:background="@color/colorAccent"
 />
 

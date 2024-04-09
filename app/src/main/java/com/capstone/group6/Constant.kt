@@ -43,6 +43,16 @@ class Constant {
         val VIEW_TYPE_GRID: Int = 1
         val VIEW_TYPE_DETAILS: Int = 2
 
+        val languageCodes = arrayOf(
+            "en",
+            "hi", // English
+            "ar", // German
+            "de", // Spanish
+            "ru", // French
+            "pt" // Italian
+
+        )
+
         fun Activity.startActivity(destination: Class<*>, position: Int = 0) {
             val intent = Intent(this, destination).apply {
                 putExtra("position", position)

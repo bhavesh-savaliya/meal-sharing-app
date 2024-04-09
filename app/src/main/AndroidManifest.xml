@@ -39,7 +39,9 @@
 
         <activity
             android:name=".ui.FeedDetailsActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
+
+        <activity android:name=".ui.LanguageActivity"/>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true" />

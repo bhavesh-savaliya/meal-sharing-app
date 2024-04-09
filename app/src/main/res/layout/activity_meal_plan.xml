@@ -215,8 +215,7 @@
                     android:hint="@string/ingredients"
                     android:padding="@dimen/_8sdp"
                     android:textAllCaps="false"
-
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColor"
                     android:textSize="@dimen/_12sdp" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -310,7 +309,7 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:text="1"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                     <ImageButton

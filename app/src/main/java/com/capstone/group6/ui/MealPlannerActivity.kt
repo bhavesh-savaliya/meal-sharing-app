@@ -18,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.capstone.group6.Constant.Companion.saveUserToFirestore
 import com.capstone.group6.Constant.Companion.showBottomSheetDialog
 import com.capstone.group6.Constant.Companion.showDietaryTagsDialog
 import com.capstone.group6.Constant.Companion.uploadImage
@@ -34,12 +33,9 @@ import com.capstone.group6.ui.adapters.IngredientsAdapter
 import com.capstone.group6.ui.interfaces.AdapterOnClick
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Random
 
 
 @AndroidEntryPoint
@@ -141,7 +137,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
                 id: Long
             ) {
                 selectedMeal = position
-                (parent?.getChildAt(0) as TextView).setTextColor(Color.BLACK)
+                (parent!!.getChildAt(0) as TextView).setTextColor(getColor(R.color.textColor))
                 (parent.getChildAt(0) as TextView)
                 val selectedMealType = mealTypes[position]
             }
@@ -190,9 +186,14 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         }
 
     private fun setUpCusineType() {
-        var adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, CuisineType.values())
+
+
+        var adapter = ArrayAdapter(this,R.layout.custom_spinner, CuisineType.values())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCuisineType.adapter = adapter
+
+
+
 //        binding.spinnerCuisineType.setSelection(0)
         binding.spinnerCuisineType.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -200,7 +201,7 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
                     parent: AdapterView<*>,
                     view: View?, position: Int, id: Long
                 ) {
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.BLACK)
+                    (parent.getChildAt(0) as TextView).setTextColor(getColor(R.color.textColor))
                     (parent.getChildAt(0) as TextView)
                     val selectedObject = binding.spinnerCuisineType.selectedItem as CuisineType
 
@@ -209,6 +210,8 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
     }
+
+
 
     private fun save() {
         var meal: Meal = Meal()
@@ -286,6 +289,9 @@ class MealPlannerActivity : AppCompatActivity(), AdapterOnClick {
         binding.etIngredients.text = textToShow.lowercase()
 
         IngredientsAdapter.selectedIngredients.clear()
+    }
+
+    override fun onClickLanguage(item: String, position: Int) {
     }
 
     override fun attachBaseContext(newBase: Context) {

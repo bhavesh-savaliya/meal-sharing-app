@@ -22,19 +22,23 @@
         android:id="@+id/viewTypeMenu"
         android:icon="@drawable/eye"
         android:title="@string/view_type"
+        android:textColor="?android:textColorPrimary"
         app:showAsAction="collapseActionView">
 
         <menu>
             <item
+                android:textColor="?android:textColorPrimary"
                 android:id="@+id/viewTypeGrid"
                 android:icon="@drawable/grid"
                 android:title="@string/view_type_grid" />
 
             <item
+                android:textColor="?android:textColorPrimary"
                 android:id="@+id/viewTypeDetails"
                 android:icon="@drawable/details"
                 android:title="@string/view_type_details" />
             <item
+                android:textColor="?android:textColorPrimary"
                 android:id="@+id/viewTypeTile"
                 android:icon="@drawable/list"
                 android:title="@string/view_type_tile" />
@@ -42,9 +46,17 @@
     </item>
 
     <item
+        android:textColor="?android:textColorPrimary"
         android:id="@+id/add"
         android:icon="@drawable/ic_new_add"
         android:title="@string/add"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:textColor="?android:textColorPrimary"
+        android:id="@+id/language"
+        android:icon="@drawable/ic_language"
+        android:title="@string/language"
         app:showAsAction="collapseActionView" />
 
 
