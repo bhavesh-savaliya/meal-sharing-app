@@ -59,4 +59,6 @@
     <string name="dark">黑暗的</string>
     <string name="light">光</string>
     <string name="add">添加</string>
+    <string name="selectLanguage">اختر اللغة</string>
+    <string name="language">"语言 "</string>
 </resources>

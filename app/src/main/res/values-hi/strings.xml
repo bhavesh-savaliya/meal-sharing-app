@@ -59,4 +59,6 @@
     <string name="dark">अँधेरा</string>
     <string name="light">रोशनी</string>
     <string name="add">जोड़ना</string>
+    <string name="selectLanguage">" भाषा चुनें "</string>
+    <string name="language">भाषा</string>
 </resources>

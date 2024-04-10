@@ -59,4 +59,6 @@
     <string name="dark">Tối tăm</string>
     <string name="light">Ánh sáng</string>
     <string name="add">Thêm vào</string>
+    <string name="selectLanguage">Chọn ngôn ngữ</string>
+    <string name="language">Ngôn ngữ</string>
 </resources>

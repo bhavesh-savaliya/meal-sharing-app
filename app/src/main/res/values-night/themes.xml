@@ -10,8 +10,11 @@
         <style name="Theme.Tiffinserviceapp" parent="Base.Theme.Tiffinserviceapp" >
         </style>
 
-    <style name="PopupMenuStyle" parent="Theme.AppCompat.Light">
-        <item name="android:background">@android:color/white</item>
+    <style name="PopupMenuStyle" parent="Theme.AppCompat.DayNight">
+        <item name="android:background">@color/black</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="titleTextColor">@color/textColor</item>
+
     </style>
         <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light">
             <item name="android:colorBackground">@color/black</item>
@@ -37,7 +40,7 @@
         </style>
 
         <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-            <item name="android:windowBackground">@drawable/rounded_corner</item>
+            <item name="android:windowBackground">@drawable/rounded_corner_dark</item>
 
         </style>
 

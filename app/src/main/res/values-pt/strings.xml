@@ -59,4 +59,6 @@
     <string name="dark">Escuro</string>
     <string name="light">Luz</string>
     <string name="add">Adicionar</string>
+    <string name="selectLanguage">Selecionar Idioma</string>
+    <string name="language">Língua</string>
 </resources>

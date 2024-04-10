@@ -45,11 +45,16 @@ class Constant {
 
         val languageCodes = arrayOf(
             "en",
-            "hi", // English
-            "ar", // German
-            "de", // Spanish
-            "ru", // French
-            "pt" // Italian
+            "ar",
+            "de",
+            "es",
+            "fr",
+            "gu",
+            "hi",
+            "pt",
+            "ru",
+            "vi",
+            "zh",
 
         )
 

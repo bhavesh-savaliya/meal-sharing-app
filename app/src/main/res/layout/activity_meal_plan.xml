@@ -116,7 +116,6 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:textColor="@color/textColor"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="@string/add_cover_image"
                         android:textSize="@dimen/_10sdp" />
 
 

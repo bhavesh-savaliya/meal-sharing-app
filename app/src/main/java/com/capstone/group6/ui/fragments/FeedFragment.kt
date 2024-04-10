@@ -211,11 +211,14 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
         dialog.setContentView(filterLayoutBinding.root);
 
         val spinner = filterLayoutBinding.spinnerMealType
+
         val adapter = context?.let {
             ArrayAdapter.createFromResource(
                 it,
                 R.array.meal_types, android.R.layout.simple_spinner_item
-            )
+            ).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
         }
         adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -226,19 +229,41 @@ class FeedFragment : Fragment(), BookmarkClickEvent {
                     parent: AdapterView<*>,
                     view: View?, position: Int, id: Long
                 ) {
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.BLACK)
+                    (parent.getChildAt(0) as TextView).setTextColor( context!!.getColor(R.color.black))
                     (parent.getChildAt(0) as TextView)
 
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+
         spinner.adapter = adapter
+        adapter?.also { spinnerAdapter ->
+            spinner.adapter = object : ArrayAdapter<String>(
+                context!!,
+                android.R.layout.simple_spinner_dropdown_item,
+                resources.getStringArray(R.array.meal_types)
+            ) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent)
+                    (view as? TextView)?.setTextColor(context.getColor(R.color.black))
+                    return view
+                }
+
+                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getDropDownView(position, convertView, parent)
+                    (view as? TextView)?.setTextColor(context.getColor(R.color.textColor))
+                    return view
+                }
+            }
+        }
+
         dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+
         filterLayoutBinding.buttonApplyFilter.setOnClickListener {
             val selectedMealType = filterLayoutBinding.spinnerMealType.selectedItem as String
             filterLayoutBinding.spinnerMealType.background.setColorFilter(
-                getResources().getColor(R.color.black),
+              context!!.getColor(R.color.textColor),
                 PorterDuff.Mode.SRC_ATOP
             );
             applyFilter(filterLayoutBinding)

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Dietary Tags"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="16dp"/>
@@ -19,19 +20,22 @@
         android:id="@+id/checkbox_vegetarian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vegetarian"/>
+        android:text="Vegetarian"
+        android:textColor="@color/textColor"/>
 
     <CheckBox
         android:id="@+id/checkbox_vegan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vegan"/>
+        android:text="Vegan"
+        android:textColor="@color/textColor"/>
 
     <CheckBox
         android:id="@+id/checkbox_gluten_free"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gluten Free"/>
+        android:text="Gluten Free"
+        android:textColor="@color/textColor"/>
 
     <CheckBox
         android:id="@+id/checkbox_dairy"
@@ -39,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Dairy"/>
 
-    <!-- Add more dietary tags as needed -->
+
 
     <Button
         android:id="@+id/btn_apply"

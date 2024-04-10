@@ -59,4 +59,6 @@
     <string name="dark">Oscuro</string>
     <string name="light">Luz</string>
     <string name="add">Agregar</string>
+    <string name="selectLanguage">Seleccionar idioma</string>
+    <string name="language">Idioma</string>
 </resources>

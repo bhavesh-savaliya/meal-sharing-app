@@ -17,8 +17,7 @@
             </item>
             <item>
                 <bitmap android:gravity="center_vertical|right"
-                    android:src="@drawable/ic_down_arrow"
-                    android:tint="@color/textColor"/>
+                    android:src="@drawable/ic_down_arrow" />
             </item>
         </layer-list>
     </item>

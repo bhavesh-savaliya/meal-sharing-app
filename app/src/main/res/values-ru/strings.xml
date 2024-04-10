@@ -59,4 +59,6 @@
     <string name="dark">Темный</string>
     <string name="light">Свет</string>
     <string name="add">Добавлять</string>
+    <string name="selectLanguage">"Выбрать язык "</string>
+    <string name="language">Язык</string>
 </resources>

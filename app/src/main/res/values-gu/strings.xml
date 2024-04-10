@@ -59,4 +59,6 @@
     <string name="dark">શ્યામ</string>
     <string name="light">પ્રકાશ</string>
     <string name="add">ઉમેરો</string>
+    <string name="selectLanguage">ભાષા પસંદ કરો</string>
+    <string name="language">ભાષા</string>
 </resources>

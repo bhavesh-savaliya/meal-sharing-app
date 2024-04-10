@@ -80,49 +80,46 @@ class MealsViewModel @Inject constructor(
                     Log.e("TAG", "Listen failed", error)
                     return@addSnapshotListener
                 }
-                for (document in result!!) {
-                    val mealData = document.data
-                    var user: User? = null
-                    val userId = mealData["user"] as? String
-                    Log.d("TAG", "UserId: ${userId}")
 
-                    if (userId != null) {
-                        Firebase.firestore.collection("users").document(userId).get()
-                            .addOnSuccessListener { userDocument ->
+                // Use coroutine scope
+                viewModelScope.launch {
+                    result?.forEach { document ->
+                        val mealData = document.data
+                        val userId = mealData["user"] as? String
+                        Log.d("TAG", "UserId: ${userId}")
+
+                        if (userId != null) {
+                            try {
+                                // Fetch user document asynchronously
+                                val userDocument = Firebase.firestore.collection("users").document(userId).get().await()
                                 if (userDocument.exists()) {
                                     val name = userDocument.getString("name")
-                                    user = User(name = name)
+                                    val user = User(name = name)
                                     Log.d("TAG", "User: $user")
-                                    var meal = document.toObject(Meal::class.java)
+
+                                    val meal = document.toObject(Meal::class.java)
                                     meal.isLocal = false
 
+                                    meal.userData = user
+                                    meal.image = meal.title?.lowercase(Locale.ROOT)?.let { getImages(it.trim()) }
 
-
-                                    viewModelScope.launch {
-                                        meal.userData = user
-//                                        updateData(meal)
-
-                                        meal.image = meal.title?.lowercase(Locale.ROOT)
-                                            ?.let { it1 -> getImages(it1.trim()) }
-
-                                        user?.let { it1 -> insertUserToRoom(it1) }
-                                        if (!isMealAlreadyInRoom(meal)) {
-                                            addMeal(meal)
-                                        }
+                                    // Perform room database operations asynchronously
+                                    insertUserToRoom(user)
+                                    if (!isMealAlreadyInRoom(meal)) {
+                                        addMeal(meal)
                                     }
-
                                 } else {
                                     Log.e("TAG", "User document does not exist")
                                 }
+                            } catch (e: Exception) {
+                                Log.e("TAG", "Error fetching user document", e)
                             }
-
-
+                        }
                     }
                 }
-
             }
-
     }
+
 
 
     fun writeData(activity: MainActivity, meal: Meal) {

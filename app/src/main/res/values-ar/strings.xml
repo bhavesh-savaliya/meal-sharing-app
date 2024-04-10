@@ -62,4 +62,5 @@
     <string name="light">فاتح</string>
     <string name="add">إضافة</string>
     <string name="selectLanguage">Select Language</string>
+    <string name="language">لغة</string>
 </resources>

@@ -58,16 +58,34 @@ class LanguageActivity : AppCompatActivity(), AdapterOnClick {
         binding.recyclerView.adapter = languageAdapter
 
     }
+    val languageCodes = arrayOf(
+        "en",
+        "ar",
+        "de",
+        "es",
+        "fr",
+        "gu",
+        "hi",
+        "pt",
+        "ru",
+        "vi",
+        "zh",
 
+        )
     private fun foodListItems() {
         val resourceId = FlagKit.getResId(this, "us")
 
         languageList.add(Language(resourceId, "USA"))
         languageList.add(Language(FlagKit.getResId(this, "ar"), "Arabic"))
-        languageList.add(Language(FlagKit.getResId(this, "in"), "Hindi"))
         languageList.add(Language(FlagKit.getResId(this, "de"), "German"))
-        languageList.add(Language(FlagKit.getResId(this, "ru"), "Russian"))
+        languageList.add(Language(FlagKit.getResId(this, "es"), "Spanish"))
+        languageList.add(Language(FlagKit.getResId(this, "fr"), "France"))
+        languageList.add(Language(FlagKit.getResId(this, "in"), "Gujarati"))
+        languageList.add(Language(FlagKit.getResId(this, "in"), "Hindi"))
         languageList.add(Language(FlagKit.getResId(this, "pt"), "Portuguese"))
+        languageList.add(Language(FlagKit.getResId(this, "ru"), "Russian"))
+        languageList.add(Language(FlagKit.getResId(this, "vi"), "Vietnamese"))
+        languageList.add(Language(FlagKit.getResId(this, "cn"), "China"))
 
     }
 
